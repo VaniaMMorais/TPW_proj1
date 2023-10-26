@@ -6,16 +6,24 @@ from datetime import datetime
 def hello(request):
     return HttpResponse("Hello World!")
 
-def numero(request, num):
-    resp = "<html><body><h1>{}</h1></body></html>".format(num)
-    return HttpResponse(resp)
-
-def numerot(request, num):
-    tparams = {
-        'num_arg':num,
-    }
-    return render(request,'numero.html', tparams)
-
 
 def index(request):
     return render(request,'index.html')
+
+
+def about(request):
+    return render(request, 'about.html')
+
+
+def blogpost(request):
+    return render(request,'blog-post.html')
+
+
+
+
+def elements(request):
+    return render(request,'elements.html')
+
+
+def recipepost(request):
+    return render(request,'recipe-post.html')

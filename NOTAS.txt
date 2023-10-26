@@ -1,9 +1,9 @@
 ONDE VOU:
     - O template já está sintonia com django
     - A página de index já está quase completa
+    - O template já está todo funcional, só falta o elements.html
+    - Apaguei a página de contacts porque achei desnecessária
 
 O QUE TENHO DE FAZER:
-    - Fazer funções para os botões que vão para outras páginas
-    - Tratar dos urls das restantes páginas
     - Apagar todos os detalhes que achar desnecessário
     - Fazer um login

@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
 
 <head>
     <meta charset="UTF-8">
@@ -12,10 +11,10 @@
     <title>Delicious - Food Blog Template | Receipe Post</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="{% static 'img/core-img/favicon.ico' %}">
 
     <!-- Core Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
 </head>
 
@@ -23,7 +22,7 @@
     <!-- Preloader -->
     <div id="preloader">
         <i class="circle-preloader"></i>
-        <img src="img/core-img/salad.png" alt="">
+        <!-- <img src="{% static 'img/core-img/salad.png' %}" alt=""> -->
     </div>
 
     <!-- Search Wrapper -->
@@ -86,7 +85,7 @@
                     <nav class="classy-navbar justify-content-between" id="deliciousNav">
 
                         <!-- Logo -->
-                        <a class="nav-brand" href="index.html"><img src="img/core-img/logo.png" alt=""></a>
+                        <a class="nav-brand" href="{% url 'index' %}"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
@@ -104,77 +103,11 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li class="active"><a href="index.html">Home</a></li>
-                                    <li><a href="#">Pages</a>
-                                        <ul class="dropdown">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="about.html">About Us</a></li>
-                                            <li><a href="blog-post.html">Blog Post</a></li>
-                                            <li><a href="receipe-post.html">Receipe Post</a></li>
-                                            <li><a href="../../webproj/app/templates/contact.html">Contact</a></li>
-                                            <li><a href="elements.html">Elements</a></li>
-                                            <li><a href="#">Dropdown</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="index.html">Home</a></li>
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="blog-post.html">Blog Post</a></li>
-                                                    <li><a href="receipe-post.html">Receipe Post</a></li>
-                                                    <li><a href="../../webproj/app/templates/contact.html">Contact</a></li>
-                                                    <li><a href="elements.html">Elements</a></li>
-                                                    <li><a href="#">Dropdown</a>
-                                                        <ul class="dropdown">
-                                                            <li><a href="index.html">Home</a></li>
-                                                            <li><a href="about.html">About Us</a></li>
-                                                            <li><a href="blog-post.html">Blog Post</a></li>
-                                                            <li><a href="receipe-post.html">Receipe Post</a></li>
-                                                            <li><a href="../../webproj/app/templates/contact.html">Contact</a></li>
-                                                            <li><a href="elements.html">Elements</a></li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Mega Menu</a>
-                                        <div class="megamenu">
-                                            <ul class="single-mega cn-col-4">
-                                                <li class="title">Catagory</li>
-                                                <li><a href="index.html">Home</a></li>
-                                                <li><a href="about.html">About Us</a></li>
-                                                <li><a href="blog-post.html">Blog Post</a></li>
-                                                <li><a href="receipe-post.html">Receipe Post</a></li>
-                                                <li><a href="../../webproj/app/templates/contact.html">Contact</a></li>
-                                                <li><a href="elements.html">Elements</a></li>
-                                            </ul>
-                                            <ul class="single-mega cn-col-4">
-                                                <li class="title">Catagory</li>
-                                                <li><a href="index.html">Home</a></li>
-                                                <li><a href="about.html">About Us</a></li>
-                                                <li><a href="blog-post.html">Blog Post</a></li>
-                                                <li><a href="receipe-post.html">Receipe Post</a></li>
-                                                <li><a href="../../webproj/app/templates/contact.html">Contact</a></li>
-                                                <li><a href="elements.html">Elements</a></li>
-                                            </ul>
-                                            <ul class="single-mega cn-col-4">
-                                                <li class="title">Catagory</li>
-                                                <li><a href="index.html">Home</a></li>
-                                                <li><a href="about.html">About Us</a></li>
-                                                <li><a href="blog-post.html">Blog Post</a></li>
-                                                <li><a href="receipe-post.html">Receipe Post</a></li>
-                                                <li><a href="../../webproj/app/templates/contact.html">Contact</a></li>
-                                                <li><a href="elements.html">Elements</a></li>
-                                            </ul>
-                                            <div class="single-mega cn-col-4">
-                                                <div class="receipe-slider owl-carousel">
-                                                    <a href="#"><img src="img/bg-img/bg1.jpg" alt=""></a>
-                                                    <a href="#"><img src="img/bg-img/bg6.jpg" alt=""></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li><a href="receipe-post.html">Receipies</a></li>
-                                    <li><a href="receipe-post.html">4 Vegans</a></li>
-                                    <li><a href="../../webproj/app/templates/contact.html">Contact</a></li>
+                                    <li class="active"><a href="{% url 'index' %}">Home</a></li>
+                                    <li class="active"><a href="{% url 'blogPost' %}">Blog Post</a></li>
+                                    <li class="active"><a href="{% url 'recipePost' %}">Recipe Post</a></li>
+                                    <li class="active"><a href="{% url 'about' %}">About us</a></li>
+                                    <li class="active"><a href="{% url 'elements' %}">Elements</a></li>
                                 </ul>
 
                                 <!-- Newsletter Form -->
@@ -193,7 +126,7 @@
     <!-- ##### Header Area End ##### -->
 
     <!-- ##### Breadcumb Area Start ##### -->
-    <div class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/breadcumb3.jpg);">
+    <div class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'img/bg-img/breadcumb3.jpg' %});">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12">
@@ -247,9 +180,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="receipe-slider owl-carousel">
-                        <img src="img/bg-img/bg5.jpg" alt="">
-                        <img src="img/bg-img/bg5.jpg" alt="">
-                        <img src="img/bg-img/bg5.jpg" alt="">
+                        <img src="{% static 'img/bg-img/bg5.jpg' %}" alt="">
+                        <img src="{% static 'img/bg-img/bg5.jpg' %}" alt="">
+                        <img src="{% static 'img/bg-img/bg5.jpg' %}" alt="">
                     </div>
                 </div>
             </div>
@@ -416,7 +349,7 @@
         <div class="insta-feeds d-flex flex-wrap">
             <!-- Single Insta Feeds -->
             <div class="single-insta-feeds">
-                <img src="img/bg-img/insta1.jpg" alt="">
+                <img src="{% static 'img/bg-img/insta1.jpg' %}" alt="">
                 <!-- Icon -->
                 <div class="insta-icon">
                     <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -425,7 +358,7 @@
 
             <!-- Single Insta Feeds -->
             <div class="single-insta-feeds">
-                <img src="img/bg-img/insta2.jpg" alt="">
+                <img src="{% static 'img/bg-img/insta2.jpg' %}" alt="">
                 <!-- Icon -->
                 <div class="insta-icon">
                     <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -434,7 +367,7 @@
 
             <!-- Single Insta Feeds -->
             <div class="single-insta-feeds">
-                <img src="img/bg-img/insta3.jpg" alt="">
+                <img src="{% static 'img/bg-img/insta3.jpg' %}" alt="">
                 <!-- Icon -->
                 <div class="insta-icon">
                     <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -443,7 +376,7 @@
 
             <!-- Single Insta Feeds -->
             <div class="single-insta-feeds">
-                <img src="img/bg-img/insta4.jpg" alt="">
+                <img src="{% static 'img/bg-img/insta4.jpg' %}" alt="">
                 <!-- Icon -->
                 <div class="insta-icon">
                     <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -452,7 +385,7 @@
 
             <!-- Single Insta Feeds -->
             <div class="single-insta-feeds">
-                <img src="img/bg-img/insta5.jpg" alt="">
+                <img src="{% static 'img/bg-img/insta5.jpg' %}" alt="">
                 <!-- Icon -->
                 <div class="insta-icon">
                     <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -461,7 +394,7 @@
 
             <!-- Single Insta Feeds -->
             <div class="single-insta-feeds">
-                <img src="img/bg-img/insta6.jpg" alt="">
+                <img src="{% static 'img/bg-img/insta6.jpg' %}" alt="">
                 <!-- Icon -->
                 <div class="insta-icon">
                     <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -470,7 +403,7 @@
 
             <!-- Single Insta Feeds -->
             <div class="single-insta-feeds">
-                <img src="img/bg-img/insta7.jpg" alt="">
+                <img src="{% static 'img/bg-img/insta7.jpg' %}" alt="">
                 <!-- Icon -->
                 <div class="insta-icon">
                     <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -496,7 +429,7 @@
                     </div>
                     <!-- Footer Logo -->
                     <div class="footer-logo">
-                        <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
+                        <a href="{% url 'index' %}"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
                     </div>
                     <!-- Copywrite -->
                     <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -510,15 +443,15 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->
-    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <script src="{% static 'js/jquery/jquery-2.2.4.min.js' %}"></script>
     <!-- Popper js -->
-    <script src="js/bootstrap/popper.min.js"></script>
+    <script src="{% static 'js/bootstrap/popper.min.js' %}"></script>
     <!-- Bootstrap js -->
-    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
     <!-- All Plugins js -->
-    <script src="js/plugins/plugins.js"></script>
+    <script src="{% static 'js/plugins/plugins.js' %}"></script>
     <!-- Active js -->
-    <script src="js/active.js"></script>
+    <script src="{% static 'js/active.js' %}"></script>
 </body>
 
 </html>

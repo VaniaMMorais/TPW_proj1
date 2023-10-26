@@ -12,10 +12,9 @@
     <title>Delicious - Food Blog Template | Home</title>
 
     <!-- Favicon -->
-    <img src="{% static 'img/core-img/favicon.ico' %}" alt="">
+    <link rel="icon" href="{% static 'img/core-img/favicon.ico' %}">
 
     <!-- Core Stylesheet -->
-     <!-- <link rel="stylesheet" href="style.css">-->
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
 
@@ -26,7 +25,7 @@
     <!-- Preloader -->
     <div id="preloader">
         <i class="circle-preloader"></i>
-        <img src="{% static 'img/core-img/salad.png' %}" alt="">
+        <!-- <img src="{% static 'img/core-img/salad.png' %}" alt=""> -->
     </div>
 
     <!-- Search Wrapper -->
@@ -89,7 +88,7 @@
                     <nav class="classy-navbar justify-content-between" id="deliciousNav">
 
                         <!-- Logo -->
-                        <a class="nav-brand" href="index.html"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
+                        <a class="nav-brand" href="{% url 'index' %}"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
@@ -107,77 +106,11 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li class="active"><a href="index.html">Home</a></li>
-                                    <li><a href="#">Pages</a>
-                                        <ul class="dropdown">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="about.html">About Us</a></li>
-                                            <li><a href="blog-post.html">Blog Post</a></li>
-                                            <li><a href="receipe-post.html">Receipe Post</a></li>
-                                            <li><a href="../../webproj/app/templates/contact.html">Contact</a></li>
-                                            <li><a href="elements.html">Elements</a></li>
-                                            <li><a href="#">Dropdown</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="index.html">Home</a></li>
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="blog-post.html">Blog Post</a></li>
-                                                    <li><a href="receipe-post.html">Receipe Post</a></li>
-                                                    <li><a href="../../webproj/app/templates/contact.html">Contact</a></li>
-                                                    <li><a href="elements.html">Elements</a></li>
-                                                    <li><a href="#">Dropdown</a>
-                                                        <ul class="dropdown">
-                                                            <li><a href="index.html">Home</a></li>
-                                                            <li><a href="about.html">About Us</a></li>
-                                                            <li><a href="blog-post.html">Blog Post</a></li>
-                                                            <li><a href="receipe-post.html">Receipe Post</a></li>
-                                                            <li><a href="../../webproj/app/templates/contact.html">Contact</a></li>
-                                                            <li><a href="elements.html">Elements</a></li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Mega Menu</a>
-                                        <div class="megamenu">
-                                            <ul class="single-mega cn-col-4">
-                                                <li class="title">Catagory</li>
-                                                <li><a href="index.html">Home</a></li>
-                                                <li><a href="about.html">About Us</a></li>
-                                                <li><a href="blog-post.html">Blog Post</a></li>
-                                                <li><a href="receipe-post.html">Receipe Post</a></li>
-                                                <li><a href="../../webproj/app/templates/contact.html">Contact</a></li>
-                                                <li><a href="elements.html">Elements</a></li>
-                                            </ul>
-                                            <ul class="single-mega cn-col-4">
-                                                <li class="title">Catagory</li>
-                                                <li><a href="index.html">Home</a></li>
-                                                <li><a href="about.html">About Us</a></li>
-                                                <li><a href="blog-post.html">Blog Post</a></li>
-                                                <li><a href="receipe-post.html">Receipe Post</a></li>
-                                                <li><a href="../../webproj/app/templates/contact.html">Contact</a></li>
-                                                <li><a href="elements.html">Elements</a></li>
-                                            </ul>
-                                            <ul class="single-mega cn-col-4">
-                                                <li class="title">Catagory</li>
-                                                <li><a href="index.html">Home</a></li>
-                                                <li><a href="about.html">About Us</a></li>
-                                                <li><a href="blog-post.html">Blog Post</a></li>
-                                                <li><a href="receipe-post.html">Receipe Post</a></li>
-                                                <li><a href="../../webproj/app/templates/contact.html">Contact</a></li>
-                                                <li><a href="elements.html">Elements</a></li>
-                                            </ul>
-                                            <div class="single-mega cn-col-4">
-                                                <div class="receipe-slider owl-carousel">
-                                                    <a href="#"><img src="img/bg-img/bg1.jpg" alt=""></a>
-                                                    <a href="#"><img src="img/bg-img/bg6.jpg" alt=""></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li><a href="receipe-post.html">Receipies</a></li>
-                                    <li><a href="receipe-post.html">4 Vegans</a></li>
-                                    <li><a href="../../webproj/app/templates/contact.html">Contact</a></li>
+                                    <li class="active"><a href="{% url 'index' %}">Home</a></li>
+                                    <li class="active"><a href="{% url 'blogPost' %}">Blog Post</a></li>
+                                    <li class="active"><a href="{% url 'recipePost' %}">Recipe Post</a></li>
+                                    <li class="active"><a href="{% url 'about' %}">About us</a></li>
+                                    <li class="active"><a href="{% url 'elements' %}">Elements</a></li>
                                 </ul>
 
                                 <!-- Newsletter Form -->
@@ -199,7 +132,7 @@
     <section class="hero-area">
         <div class="hero-slides owl-carousel">
             <!-- Single Hero Slide -->
-            <div class="single-hero-slide bg-img" style="background-image: url(img/bg-img/bg1.jpg);">
+            <div class="single-hero-slide bg-img" style="background-image: url({% static 'img/bg-img/bg1.jpg' %});">
                 <div class="container h-100">
                     <div class="row h-100 align-items-center">
                         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
@@ -214,7 +147,7 @@
             </div>
 
             <!-- Single Hero Slide -->
-            <div class="single-hero-slide bg-img" style="background-image: url(img/bg-img/bg6.jpg);">
+            <div class="single-hero-slide bg-img" style="background-image: url({% static 'img/bg-img/bg6.jpg' %});">
                 <div class="container h-100">
                     <div class="row h-100 align-items-center">
                         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
@@ -229,7 +162,7 @@
             </div>
 
             <!-- Single Hero Slide -->
-            <div class="single-hero-slide bg-img" style="background-image: url(img/bg-img/bg7.jpg);">
+            <div class="single-hero-slide bg-img" style="background-image: url({% static 'img/bg-img/bg7.jpg' %});">
                 <div class="container h-100">
                     <div class="row h-100 align-items-center">
                         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
@@ -253,12 +186,12 @@
                 <!-- Top Catagory Area -->
                 <div class="col-12 col-lg-6">
                     <div class="single-top-catagory">
-                        <img src="img/bg-img/bg2.jpg" alt="">
+                        <img src="{% static 'img/bg-img/bg2.jpg' %}" alt="">
                         <!-- Content -->
                         <div class="top-cta-content">
                             <h3>Strawberry Cake</h3>
                             <h6>Simple &amp; Delicios</h6>
-                            <a href="receipe-post.html" class="btn delicious-btn">See Full Receipe</a>
+                            <a href="{% url 'recipePost' %}" class="btn delicious-btn">See Full Recipe</a>
                         </div>
                     </div>
                 </div>
@@ -268,9 +201,9 @@
                         <img src="{% static 'img/bg-img/bg3.jpg' %}" alt="">
                         <!-- Content -->
                         <div class="top-cta-content">
-                            <h3>Chinesse Noodles</h3>
-                            <h6>Simple &amp; Delicios</h6>
-                            <a href="receipe-post.html" class="btn delicious-btn">See Full Receipe</a>
+                            <h3>Chinese Noodles</h3>
+                            <h6>Simple & Delicious</h6>
+                            <a href="{% url 'recipePost' %}" class="btn delicious-btn">See Full Recipe</a>
                         </div>
                     </div>
                 </div>
@@ -279,7 +212,7 @@
     </section>
     <!-- ##### Top Catagory Area End ##### -->
 
-    <!-- ##### Best Receipe Area Start ##### -->
+    <!-- ##### Best Recipe Area Start ##### -->
     <section class="best-receipe-area">
         <div class="container">
             <div class="row">
@@ -296,8 +229,8 @@
                     <div class="single-best-receipe-area mb-30">
                         <img src="{% static 'img/bg-img/r1.jpg' %}" alt="">
                         <div class="receipe-content">
-                            <a href="receipe-post.html">
-                                <h5>Sushi Easy Receipy</h5>
+                            <a href="{% url 'recipePost' %}">
+                                <h5>Sushi Easy Recipe</h5>
                             </a>
                             <div class="ratings">
                                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -315,7 +248,7 @@
                     <div class="single-best-receipe-area mb-30">
                         <img src="{% static 'img/bg-img/r2.jpg' %}" alt="">
                         <div class="receipe-content">
-                            <a href="receipe-post.html">
+                            <a href="{% url 'recipePost' %}">
                                 <h5>Homemade Burger</h5>
                             </a>
                             <div class="ratings">
@@ -334,7 +267,7 @@
                     <div class="single-best-receipe-area mb-30">
                         <img src="{% static 'img/bg-img/r3.jpg' %}" alt="">
                         <div class="receipe-content">
-                            <a href="receipe-post.html">
+                            <a href="{% url 'recipePost' %}">
                                 <h5>Vegan Smoothie</h5>
                             </a>
                             <div class="ratings">
@@ -353,7 +286,7 @@
                     <div class="single-best-receipe-area mb-30">
                         <img src="{% static 'img/bg-img/r4.jpg' %}" alt="">
                         <div class="receipe-content">
-                            <a href="receipe-post.html">
+                            <a href="{% url 'recipePost' %}">
                                 <h5>Calabasa soup</h5>
                             </a>
                             <div class="ratings">
@@ -372,7 +305,7 @@
                     <div class="single-best-receipe-area mb-30">
                         <img src="{% static 'img/bg-img/r5.jpg' %}" alt="">
                         <div class="receipe-content">
-                            <a href="receipe-post.html">
+                            <a href="{% url 'recipePost' %}">
                                 <h5>Homemade Breakfast</h5>
                             </a>
                             <div class="ratings">
@@ -391,7 +324,7 @@
                     <div class="single-best-receipe-area mb-30">
                         <img src="{% static 'img/bg-img/r6.jpg' %}" alt="">
                         <div class="receipe-content">
-                            <a href="receipe-post.html">
+                            <a href="{% url 'recipePost' %}">
                                 <h5>Healthy Fruit Desert</h5>
                             </a>
                             <div class="ratings">
@@ -410,13 +343,13 @@
     <!-- ##### Best Receipe Area End ##### -->
 
     <!-- ##### CTA Area Start ##### -->
-    <section class="cta-area bg-img bg-overlay" style="background-image: url(img/bg-img/bg4.jpg);">
+    <section class="cta-area bg-img bg-overlay" style="background-image: url({% static 'img/bg-img/bg4.jpg' %});">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <!-- Cta Content -->
                     <div class="cta-content text-center">
-                        <h2>Gluten Free Receipies</h2>
+                        <h2>Gluten Free Recipies</h2>
                         <p>Fusce nec ante vitae lacus aliquet vulputate. Donec scelerisque accumsan molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras sed accumsan neque. Ut vulputate, lectus vel aliquam congue, risus leo elementum nibh</p>
                         <a href="#" class="btn delicious-btn">Discover all the receipies</a>
                     </div>
@@ -441,7 +374,7 @@
                         <!-- Receipe Content -->
                         <div class="receipe-content">
                             <span>January 04, 2018</span>
-                            <a href="receipe-post.html">
+                            <a href="{% url 'recipePost' %}">
                                 <h5>Homemade italian pasta</h5>
                             </a>
                             <div class="ratings">
@@ -466,7 +399,7 @@
                         <!-- Receipe Content -->
                         <div class="receipe-content">
                             <span>January 04, 2018</span>
-                            <a href="receipe-post.html">
+                            <a href="{% url 'recipePost' %}">
                                 <h5>Baked Bread</h5>
                             </a>
                             <div class="ratings">
@@ -491,7 +424,7 @@
                         <!-- Receipe Content -->
                         <div class="receipe-content">
                             <span>January 04, 2018</span>
-                            <a href="receipe-post.html">
+                            <a href="{% url 'recipePost' %}">
                                 <h5>Scalops on salt</h5>
                             </a>
                             <div class="ratings">
@@ -516,7 +449,7 @@
                         <!-- Receipe Content -->
                         <div class="receipe-content">
                             <span>January 04, 2018</span>
-                            <a href="receipe-post.html">
+                            <a href="{% url 'recipePost' %}">
                                 <h5>Fruits on plate</h5>
                             </a>
                             <div class="ratings">
@@ -541,7 +474,7 @@
                         <!-- Receipe Content -->
                         <div class="receipe-content">
                             <span>January 04, 2018</span>
-                            <a href="receipe-post.html">
+                            <a href="{% url 'recipePost' %}">
                                 <h5>Macaroons</h5>
                             </a>
                             <div class="ratings">
@@ -566,7 +499,7 @@
                         <!-- Receipe Content -->
                         <div class="receipe-content">
                             <span>January 04, 2018</span>
-                            <a href="receipe-post.html">
+                            <a href="{% url 'recipePost' %}">
                                 <h5>Chocolate tart</h5>
                             </a>
                             <div class="ratings">
@@ -591,7 +524,7 @@
                         <!-- Receipe Content -->
                         <div class="receipe-content">
                             <span>January 04, 2018</span>
-                            <a href="receipe-post.html">
+                            <a href="{% url 'recipePost' %}">
                                 <h5>Berry Desert</h5>
                             </a>
                             <div class="ratings">
@@ -616,7 +549,7 @@
                         <!-- Receipe Content -->
                         <div class="receipe-content">
                             <span>January 04, 2018</span>
-                            <a href="receipe-post.html">
+                            <a href="{% url 'recipePost' %}">
                                 <h5>Zucchini Grilled on peper</h5>
                             </a>
                             <div class="ratings">
@@ -641,7 +574,7 @@
                         <!-- Receipe Content -->
                         <div class="receipe-content">
                             <span>January 04, 2018</span>
-                            <a href="receipe-post.html">
+                            <a href="{% url 'recipePost' %}">
                                 <h5>Chicken Salad</h5>
                             </a>
                             <div class="ratings">
@@ -682,7 +615,7 @@
                     <div class="newsletter-area">
                         <h4>Subscribe to our newsletter</h4>
                         <!-- Form -->
-                        <div class="newsletter-form bg-img bg-overlay" style="background-image: url(img/bg-img/bg1.jpg);">
+                        <div class="newsletter-form bg-img bg-overlay" style="background-image: url({% static 'img/bg-img/bg1.jpg' %});">
                             <form action="#" method="post">
                                 <input type="email" name="email" placeholder="Subscribe to newsletter">
                                 <button type="submit" class="btn delicious-btn w-100">Subscribe</button>
@@ -695,7 +628,7 @@
                 <!-- Adds -->
                 <div class="col-12 col-lg-4">
                     <div class="delicious-add">
-                        <img src="{% static 'img/bg-img/add.jpg' %}" alt="">
+                        <img src="{% static 'img/bg-img/add.png' %}" alt="">
                     </div>
                 </div>
             </div>
@@ -721,7 +654,7 @@
                     </div>
                     <!-- Footer Logo -->
                     <div class="footer-logo">
-                        <a href="index.html"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
+                        <a href="{% url 'index' %}"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
                     </div>
                     <!-- Copywrite -->
                     <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
