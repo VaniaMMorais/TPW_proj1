@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # dar conhecimento ao django da nossa app
     'app.apps.AppConfig',
 ]
 

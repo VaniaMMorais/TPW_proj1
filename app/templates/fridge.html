@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<h1> My fridge </h1>
+
+<div>
+    <div>
+        {% for receita in receitas %}
+
+            <div>
+                <a href="{% url 'updateReceita' receita.id %}"> Edit </a>
+                <a href="{% url 'deleteRecipe' receita.id %}"> Delete </a>
+                <small>{{receita.category.name}} : </small>
+                <span>{{ receita.name}}</span>
+                <span> adicionada por {{ receita.user.username}}</span>
+                <h5> {{receita.name}} --  {{receita.description}} </h5>
+            </div>
+        
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}
