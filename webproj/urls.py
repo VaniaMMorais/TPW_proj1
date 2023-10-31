@@ -24,10 +24,11 @@ from app import views
 urlpatterns = [
     path('admin/',admin.site.urls),
     path('hello/', views.hello, name='hello'),
-    path('', views.index, name='index'),
+    path('index/', views.index, name='index'),
     path('',include('app.urls')),
     path('about/', views.about, name='about'),
     path('blog-post/', views.blogpost, name='blogPost'),
     path('elements/', views.elements, name='elements'),
     path('recipe-post/', views.recipepost, name='recipePost'),
+    path('login/', views.login, name='login'),
 ]

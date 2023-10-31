@@ -16,6 +16,17 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Email configuration
+EMAIL_HOST = 'your-smtp-server.com'
+EMAIL_PORT = 587  # Use the appropriate port for your email service
+EMAIL_USE_TLS = True  # Set to True if your email service requires TLS
+EMAIL_HOST_USER = 'testesprojetos2023@gmail.com'  # Your email address
+EMAIL_HOST_PASSWORD = 'testesprojetos'  # Your email password
+DEFAULT_FROM_EMAIL = 'testesprojetos2023@gmail.com'  # Default sender email
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -25,7 +36,7 @@ SECRET_KEY = 'django-insecure-&ke^159+_%f$*5+hj@e8yktw75^%+@6+(_a$nf@yu@by9^by4=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
