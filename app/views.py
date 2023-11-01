@@ -5,6 +5,7 @@ from datetime import datetime
 
 from webproj import settings
 from .models import Receita
+from .models import Categoria
 from .forms import ReceitaForm, LoginForm
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -32,6 +33,7 @@ def hello(request):
 
 
 def index(request):
+    
     return render(request,'index.html')
 
 def loginp(request):
@@ -39,7 +41,11 @@ def loginp(request):
 
 
 def about(request):
-    return render(request, 'about.html')
+    nreceitas = Receita.objects.all().count()
+    nvegan = Receita.objects.filter(category=13).count()
+    ncarne = Receita.objects.filter(category=6).count()
+    nsobremesa = Receita.objects.filter(category=9).count()
+    return render(request, 'about.html', {"nreceitas": nreceitas, "nvegan": nvegan, "ncarne": ncarne, "nsobremesa": nsobremesa})
 
 
 def blogpost(request):
@@ -50,8 +56,9 @@ def elements(request):
     return render(request,'elements.html')
 
 
-def recipepost(request):
-    return render(request,'recipe-post.html')
+def recipepost(request, id):
+    receita = Receita.objects.get(id=id)
+    return render(request,'recipe-post.html', {'receita': receita})
 
 def fridge(request):
 
@@ -97,6 +104,10 @@ def deleteRecipe(request,pk):
         return redirect('index')
     
     return render(request,'delete.html', {'obj' : 'recipe'})
+
+def filtered_recipies(request, cat):
+    receitas = Receita.objects.filter(category=cat)
+    return render(request, 'filteredrecipies.html', {'receitas': receitas})
 
 
 def signup(request):
@@ -171,8 +182,9 @@ def signin(request):
         if user is not None:
             login(request, user)
             fname = user.first_name
+            receitas = Receita.objects.all()
             # messages.success(request, "Logged In Sucessfully!!")
-            return render(request, "index.html", {"fname": fname})
+            return render(request, "index.html", {"fname": fname, "receitas": receitas})
         else:
             messages.error(request, "Bad Credentials!!")
             return redirect('loginp')

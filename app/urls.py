@@ -11,6 +11,9 @@ urlpatterns = [
     path('signin', views.signin, name='signin'),
     path('signout', views.signout, name='signout'),
     path('fridge/', views.fridge, name ="fridge"),
+    path('filtered_recipies/<int:cat>', views.filtered_recipies, name='filtered_recipies'),
+    path('recipepost/<int:id>', views.recipepost, name='recipepost'),
+
 
     path('newrecipe/',  views.createRecipe, name = "createRecipe"),
     path('updaterecipe/<str:pk>',  views.updateReceita, name = "updateReceita"),

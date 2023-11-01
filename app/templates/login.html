@@ -62,7 +62,7 @@
     <div class="hero-area" style="display: flex; justify-content: space-between; ">
         <div class="hero-slides owl-carousel" style="flex: 1;width: 50%  ">
             <!-- Single Hero Slide -->
-            <div class="single-hero-slide bg-img" style="background-image: url({% static 'img/bg-img/bg1.jpg' %}); width: 700px;">
+            <div class="single-hero-slide bg-img" style="background-image: url({% static 'img/bg-img/bg1.jpg' %});">
             </div>
 
             <!-- Single Hero Slide -->
@@ -91,16 +91,16 @@
                 <h4>You're successfully logged in.</h4>
                 <button type="submit"><a href="{% url 'signout' %}">SignOut</a></button>
             {% else %}
-                <div style="margin-left: -290px;margin-top: 10px">
-                    <h3>Do you have an account?</h3>
+                <div style="margin-left: -250px;margin-top: 10px">
+                    <h3>If you don't have an account yet, click here!</h3>
                     <button class="btn" type="submit"><a href="{% url 'signup' %}">SignUp</a></button>
                 </div>
 
 
             <br/>
             <br/>
-                <div style="margin-left: -35px; margin-top: 10px">
-                <h3>If you don't have an account yet, click here!</h3>
+                <div style="margin-left: -500px; margin-top: 10px">
+                <h3>Do you have an account?</h3>
                 <button class="btn" type="submit"><a href="{% url 'signin' %}">SignIn</a></button>
                 </div>
 

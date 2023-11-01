@@ -58,7 +58,7 @@
                             <div id="breakingNewsTicker" class="ticker">
                                 <ul>
                                     <li><a href="#">Hello World!</a></li>
-                                    <li><a href="#">Welcome to Colorlib Family.</a></li>
+                                    <li><a href="#">Hello {{user.username}}.</a></li>
                                     <li><a href="#">Hello Delicious!</a></li>
                                 </ul>
                             </div>
@@ -67,13 +67,20 @@
 
                     <!-- Top Social Info -->
                     <div class="col-12 col-sm-6">
-                        <div class="top-social-info text-right">
-                            <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="top-social-info text-right">
+                                    <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                                    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                    <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
+                                    <a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a>
+                                    <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn" type="submit"><a href="{% url 'signout' %}">SignOut</a></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -107,10 +114,9 @@
                             <div class="classynav">
                                 <ul>
                                     <li class="active"><a href="{% url 'index' %}">Home</a></li>
-                                    <li class="active"><a href="{% url 'blogPost' %}">Blog Post</a></li>
-                                    <li class="active"><a href="{% url 'recipePost' %}">Recipe Post</a></li>
+                                    <li class= "active"><a href="{% url 'fridge' %}">Your fridge</a></li>
+                                    <li class="active"><a href="{% url 'createRecipe' %}">Add Recipe</a></li>
                                     <li class="active"><a href="{% url 'about' %}">About us</a></li>
-                                    <li class="active"><a href="{% url 'elements' %}">Elements</a></li>
                                 </ul>
 
                                 <!-- Newsletter Form -->
