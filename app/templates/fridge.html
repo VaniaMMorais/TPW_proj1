@@ -15,6 +15,22 @@
                 <span>{{ receita.name}}</span>
                 <span> adicionada por {{ receita.user.username}}</span>
                 <h5> {{receita.name}} --  {{receita.description}} </h5>
+                <span>Tempo de Preparação: {{ receita.tempoPreparacao }} minutos</span>
+                <span>Tempo de Cozinhar: {{ receita.tempoCozinhar }} minutos</span>
+                <span>Quantidade de Pessoas: {{ receita.quantidadePessoas }}</span>
+                <span>Nível: {{ receita.nivel }}</span>
+                <!-- Exibindo a imagem -->
+                {% if receita.imagem %}
+                    <img src="{{ receita.imagem.url }}" alt="{{ receita.name }}"/>
+                {% endif %}
+
+                <h6>Ingredientes:</h6>
+                <ul>
+                    {% for receitaingrediente in receita.receitaingrediente_set.all %}
+                        <li>{{ receitaingrediente.ingrediente.nome }} ({{ receitaingrediente.quantidade }})</li>
+                    {% endfor %}
+                </ul>
+                
             </div>
         
         {% endfor %}
