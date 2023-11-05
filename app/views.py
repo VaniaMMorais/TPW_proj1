@@ -32,9 +32,10 @@ def hello(request):
     return HttpResponse("Hello World!")
 
 
-def index(request):
-    
-    return render(request,'index.html')
+def index(request, username):
+    user = User.objects.get(username=username)
+    receitas = Receita.objects.all()
+    return render(request, 'index.html', {'receitas': receitas, 'fname': user.first_name})
 
 def loginp(request):
     return render(request,'login.html')
@@ -79,7 +80,8 @@ def createRecipe(request):
         form = ReceitaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            if request.user.is_authenticated:
+                return redirect('index', username=request.user.username)
 
     context = {'form': form}
     return render(request,'newrecipe.html', context)
@@ -92,7 +94,8 @@ def updateReceita(request,pk):
         form = ReceitaForm(request.POST, instance=recipe)
         if form.is_valid():
             form.save()
-            return redirect('fridge')
+            if request.user.is_authenticated:
+                return redirect('index', username=request.user.username)
 
     context = {'form': form}
     return render(request,'newrecipe.html', context)
@@ -101,7 +104,8 @@ def deleteRecipe(request,pk):
     recipe = Receita.objects.get(id=pk)
     if request.method == 'POST':
         recipe.delete()
-        return redirect('index')
+        if request.user.is_authenticated:
+                return redirect('index', username=request.user.username)
     
     return render(request,'delete.html', {'obj' : 'recipe'})
 
@@ -181,10 +185,7 @@ def signin(request):
 
         if user is not None:
             login(request, user)
-            fname = user.first_name
-            receitas = Receita.objects.all()
-            # messages.success(request, "Logged In Sucessfully!!")
-            return render(request, "index.html", {"fname": fname, "receitas": receitas})
+            return redirect('index', username=user.username)
         else:
             messages.error(request, "Bad Credentials!!")
             return redirect('loginp')
