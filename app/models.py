@@ -17,6 +17,12 @@ class CategoriaIngrediente(models.Model):
     def __str__(self):
         return self.name
     
+class CategoriaRefeicao(models.Model):
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+    
 class Ingrediente(models.Model):
     nome = models.CharField(max_length=255)
     categoria = models.ForeignKey(CategoriaIngrediente, on_delete=models.SET_NULL, null=True)
@@ -90,7 +96,7 @@ class Favoritos(models.Model):
         return f"{self.receita.name} nos favoritos de {self.user.username}"
 
 
-class ReceitasListaCompras(models.Model):
+class ListaCompras(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ingredient = models.ForeignKey(Ingrediente, on_delete=models.CASCADE)
     data = models.DateField()
@@ -100,11 +106,13 @@ class ReceitasListaCompras(models.Model):
         return f"{self.ingredient.nome} na lista de compras de {self.user.username}"
 
 # Modelo para Receitas_Planificacao
-class ReceitasPlanificacao(models.Model):
+class Planificacao(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     receita = models.ForeignKey(Receita, on_delete=models.CASCADE)
-    data = models.DateField()
-    category = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
+    start = models.DateTimeField(null=True,blank=True)
+    end = models.DateTimeField(null=True,blank=True)
+    category = models.ForeignKey(CategoriaRefeicao, on_delete=models.SET_NULL, null=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 

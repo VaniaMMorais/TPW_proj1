@@ -2,15 +2,16 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Receita,Categoria,Avaliacao,Ingrediente,ReceitaIngrediente,Frigorifico,Favoritos,ReceitasListaCompras,ReceitasPlanificacao,CategoriaIngrediente
+from .models import Receita,Categoria,Avaliacao,Ingrediente,ReceitaIngrediente,Frigorifico,Favoritos,ListaCompras,Planificacao,CategoriaIngrediente,CategoriaRefeicao
 
 admin.site.register(Receita)
 admin.site.register(Categoria)
 admin.site.register(CategoriaIngrediente)  
+admin.site.register(CategoriaRefeicao)  
 admin.site.register(Avaliacao)                   
 admin.site.register(Ingrediente)  
 admin.site.register(ReceitaIngrediente)  
 admin.site.register(Frigorifico)  
 admin.site.register(Favoritos)  
-admin.site.register(ReceitasListaCompras)  
-admin.site.register(ReceitasPlanificacao)  
+admin.site.register(ListaCompras)  
+admin.site.register(Planificacao)  

@@ -1,12 +1,16 @@
 from django.contrib.auth import authenticate
 from django.shortcuts import render,redirect
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse 
+
 from datetime import datetime
 
 from webproj import settings
 from .models import Receita
 from .models import Categoria
+from .models import Planificacao
 from .forms import ReceitaForm, LoginForm
+
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
@@ -197,5 +201,74 @@ def signout(request):
     messages.success(request, "Logged Out Successfully!!")
     return redirect('loginp')
 
+# VIEWS para a PLANIFICAÇÃO
+def planner(request):  
+    all_events = Planificacao.objects.all()
+    context = {
+        "events":all_events,
+    }
+    return render(request,'planner.html',context)
+ 
+def all_events(request):                                                                                                 
+    all_events = Planificacao.objects.all()                                                                                    
+    out = []                                                                                                             
+    for event in all_events:                                                                                             
+        out.append({                                                                                                     
+            'recipe': event.receita.name,    
+            'categoria': event.category,                                                                             
+            'id': event.id,                                                                                              
+            'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),                                                         
+            'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),                                                             
+        })                                                                                                               
+                                                                                                                      
+    return JsonResponse(out, safe=False) 
+ 
+def add_event(request):
+    start = request.GET.get("start", None)
+    end = request.GET.get("end", None)
+    recipe = request.GET.get("recipe", None)
+    category = request.GET.get("category", None)
+    
+    # Certifique-se de que a receita e a categoria sejam válidas
+    if recipe and category:
+        event = Planificacao(
+            receita=Receita.objects.get(id=recipe), 
+            category=CategoriaRefeicao.objects.get(id=category),
+            start=start, 
+            end=end
+        )
+        event.save()
+    
+    data = {}
+    return JsonResponse(data)
+
+def update(request):
+    start = request.GET.get("start", None)
+    end = request.GET.get("end", None)
+    recipe = request.GET.get("recipe", None)
+    id = request.GET.get("id", None)
+    category = request.GET.get("category", None)
+
+    if id:
+        event = Planificacao.objects.get(id=id)
+        event.start = start
+        event.end = end
+
+        # Certifique-se de que a receita e a categoria sejam válidas
+        if recipe and category:
+            event.receita = Receita.objects.get(id=recipe)
+            event.category = CategoriaRefeicao.objects.get(id=category)
+
+        event.save()
+
+    data = {}
+    return JsonResponse(data)
+ 
+def remove(request):
+    id = request.GET.get("id", None)
+    event = Planificacao.objects.get(id=id)
+    event.delete()
+    data = {}
+    return JsonResponse(data)
 
 
