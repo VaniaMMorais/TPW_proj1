@@ -21,6 +21,8 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth import authenticate, login, logout
 from . tokens import generate_token
+from django.db.models import Avg
+
 
 from app import models
 
