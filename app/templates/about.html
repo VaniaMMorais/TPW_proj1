@@ -111,7 +111,7 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li class="active"><a href="{% url 'index' %}">Home</a></li>
+                                    <li class="active"><a href="{% url 'index' username=user.username %}">Home</a></li>
                                     <li class= "active"><a href="{% url 'fridge' %}">Your fridge</a></li>
                                     <li class="active"><a href="{% url 'createRecipe' %}">Add Recipe</a></li>
                                     <li class="active"><a href="{% url 'about' %}">About us</a></li>

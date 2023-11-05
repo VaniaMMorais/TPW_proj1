@@ -110,7 +110,7 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li class="active"><a href="{% url 'index' %}">Home</a></li>
+                                    <li class="active"><a href="{% url 'index' username=user.username %}">Home</a></li>
                                     <li class= "active"><a href="{% url 'fridge' %}">Your fridge</a></li>
                                     <li class="active"><a href="{% url 'createRecipe' %}">Add Recipe</a></li>
                                     <li class="active"><a href="{% url 'about' %}">About us</a></li>
@@ -257,9 +257,37 @@
                 </div>
 
                 <div style="display: flex ;align-content: center; padding-top: 30px; padding-bottom: 30px">
-                    {% if user.is_authenticated and user == receita.user %}
-                        <h3 style="padding-right: 500px">Is there something missing?</h3>
+                    {% if user.is_authenticated and user == receita.user or  user.is_superuser %}
+                        <h3 style="padding-right: 300px">Is there something missing?</h3>
                         <a class="btn delicious-btn mt-30"  href="{% url 'updateReceita' receita.id %}">Update Recipe</a>
+                        <!-- Link para abrir o modal -->
+                        <a class="btn delicious-btn mt-30" data-toggle="modal" data-target="#deleteRecipeModal">Delete Recipe</a>
+
+                        <!-- Modal de confirmação de exclusão -->
+                        <div class="modal fade" id="deleteRecipeModal" tabindex="-1" role="dialog" aria-labelledby="deleteRecipeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteRecipeModalLabel">Confirm Deletion</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete "{{receita.name}}"?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
+                                        <form method="POST" action="{% url 'deleteRecipe' pk=receita.id %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="recipe_id" value="{{ receita.id }}">
+                                            <input type="submit" class="btn btn-danger" value="Confirm">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     {% endif %}
                 </div>
 
