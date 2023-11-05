@@ -1,138 +1,8 @@
+{% extends 'main.html' %}
+
 {% load static %}
 
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-    <!-- Title -->
-    <title>Delicious - Food Blog | Recipes</title>
-
-    <!-- Favicon -->
-    <link rel="icon" href="{% static 'img/core-img/favicon.ico' %}">
-
-    <!-- Core Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-
-
-
-</head>
-
-<body>
-    <!-- Preloader -->
-    <div id="preloader">
-        <i class="circle-preloader"></i>
-        <!-- <img src="{% static 'img/core-img/salad.png' %}" alt=""> -->
-    </div>
-
-    <!-- Search Wrapper -->
-    <div class="search-wrapper">
-        <!-- Close Btn -->
-        <div class="close-btn"><i class="fa fa-times" aria-hidden="true"></i></div>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <form action="#" method="post">
-                        <input type="search" name="search" placeholder="Type any keywords...">
-                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ##### Header Area Start ##### -->
-    <header class="header-area">
-
-        <!-- Top Header Area -->
-        <div class="top-header-area">
-            <div class="container h-100">
-                <div class="row h-100 align-items-center justify-content-between">
-                    <!-- Breaking News -->
-                    <div class="col-12 col-sm-6">
-                        <div class="breaking-news">
-                            <div id="breakingNewsTicker" class="ticker">
-                                <ul>
-                                    <li><a href="#">Hello {{ fname }}!</a></li>
-                                    <li><a href="#">Welcome to Colorlib Family.</a></li>
-                                    <li><a href="#">Hello Delicious!</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Top Social Info -->
-                    <div class="col-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="top-social-info text-right">
-                                    <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <button class="btn" type="submit"><a href="{% url 'signout' %}">SignOut</a></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Navbar Area -->
-        <div class="delicious-main-menu">
-            <div class="classy-nav-container breakpoint-off">
-                <div class="container">
-                    <!-- Menu -->
-                    <nav class="classy-navbar justify-content-between" id="deliciousNav">
-
-                        <!-- Logo -->
-                        <a class="nav-brand" href="{% url 'index' %}"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
-
-                        <!-- Navbar Toggler -->
-                        <div class="classy-navbar-toggler">
-                            <span class="navbarToggler"><span></span><span></span><span></span></span>
-                        </div>
-
-                        <!-- Menu -->
-                        <div class="classy-menu">
-
-                            <!-- close btn -->
-                            <div class="classycloseIcon">
-                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                            </div>
-
-                            <!-- Nav Start -->
-                            <div class="classynav">
-                                <ul>
-                                    <li class="active"><a href="{% url 'index' username=user.username %}">Home</a></li>
-                                    <li class= "active"><a href="{% url 'fridge' %}">Your fridge</a></li>
-                                    <li class="active"><a href="{% url 'createRecipe' %}">Add Recipe</a></li>
-                                    <li class="active"><a href="{% url 'about' %}">About us</a></li>
-                                </ul>
-
-                                <!-- Newsletter Form -->
-                                <div class="search-btn">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </div>
-
-                            </div>
-                            <!-- Nav End -->
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- ##### Header Area End ##### -->
+{% block content %}
 
     <!-- ##### Hero Area Start ##### -->
     <section class="hero-area">
@@ -143,9 +13,9 @@
                     <div class="row h-100 align-items-center">
                         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                             <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
-                                <h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade Burger</h2>
-                                <p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tristique nisl vitae luctus sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu varius.</p>
-                                <a href="#" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">See Receipe</a>
+                                <h2 data-animation="fadeInUp" data-delay="300ms">Discover new recipies</h2>
+                                <p data-animation="fadeInUp" data-delay="700ms">Explore a variety of delicious recipes available. From main dishes to incredible desserts, discover new flavors, get inspired and start cooking your own gastronomic creations.</p>
+                                <a href="#best-receipe-section" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">See Recipies</a>
                             </div>
                         </div>
                     </div>
@@ -158,9 +28,9 @@
                     <div class="row h-100 align-items-center">
                         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                             <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
-                                <h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade Burger</h2>
-                                <p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tristique nisl vitae luctus sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu varius.</p>
-                                <a href="#" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">See Receipe</a>
+                                <h2 data-animation="fadeInUp" data-delay="300ms">Add your own recipes</h2>
+                                <p data-animation="fadeInUp" data-delay="700ms">Be a chef in your own kitchen! Our platform offers you the opportunity to share your exclusive recipes with the community of food lovers. Add your special creations, describe the ingredients and preparation steps, and inspire others to try your delicious recipes.</p>
+                                <a href="{% url 'createRecipe' %}" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Add Recipe</a>
                             </div>
                         </div>
                     </div>
@@ -173,9 +43,9 @@
                     <div class="row h-100 align-items-center">
                         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                             <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
-                                <h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade Burger</h2>
-                                <p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tristique nisl vitae luctus sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu varius.</p>
-                                <a href="#" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">See Receipe</a>
+                                <h2 data-animation="fadeInUp" data-delay="300ms">Tell us what's in your fridge</h2>
+                                <p data-animation="fadeInUp" data-delay="700ms">Open the virtual doors of your personal refrigerator. Here, you can organize and manage all the ingredients you have available in your pantry. Keep track of fresh items, essential products and specialty ingredients. You can add, remove, and update items as needed, ensuring you're always ready to create your favorite recipes. Keep your digital fridge well stocked and never run out of ideas for your next meals.</p>
+                                <a href="{% url 'fridge' %}" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Your fridge</a>
                             </div>
                         </div>
                     </div>
@@ -185,41 +55,9 @@
     </section>
     <!-- ##### Hero Area End ##### -->
 
-    <!-- ##### Top Catagory Area Start ##### -->
-    <section class="top-catagory-area section-padding-80-0">
-        <div class="container">
-            <div class="row">
-                <!-- Top Catagory Area -->
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-catagory">
-                        <img src="{% static 'img/bg-img/bg2.jpg' %}" alt="">
-                        <!-- Content -->
-                        <div class="top-cta-content">
-                            <h3>Strawberry Cake</h3>
-                            <h6>Simple &amp; Delicios</h6>
-                            <a href="{% url 'recipePost' %}" class="btn delicious-btn">See Full Recipe</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Top Catagory Area -->
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-catagory">
-                        <img src="{% static 'img/bg-img/bg3.jpg' %}" alt="">
-                        <!-- Content -->
-                        <div class="top-cta-content">
-                            <h3>Chinese Noodles</h3>
-                            <h6>Simple & Delicious</h6>
-                            <a href="{% url 'recipePost' %}" class="btn delicious-btn">See Full Recipe</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ##### Top Catagory Area End ##### -->
 
     <!-- ##### Best Recipe Area Start ##### -->
-    <section class="best-receipe-area">
+    <section class="best-receipe-area" style="padding-top:50px"  id="best-receipe-section">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -230,43 +68,32 @@
             </div>
 
             <div class="row">
-                {% block content %}
                 <!-- Single Best Receipe Area -->
                 {% for receita in receitas %}
                     <div class="col-12 col-sm-6 col-lg-4">
                         <div class="single-best-receipe-area mb-30">
-                            <img src="{% static 'img/bg-img/r1.jpg' %}" alt="">
+                            {% if receita.imagem %}
+                                <img class="receita-image" src="{{ receita.imagem.url }}" alt="{{ receita.name }}" style="max-width: 350px; max-height: 150px; width: 100%; height: auto;object-fit: cover;"/>
+                            {% endif %}
                             <div class="receipe-content">
                                 <a href="{% url 'recipepost' receita.id %}">
                                     <h5>{{receita.name}}</h5>
                                 </a>
                                 <div class="ratings">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                </div>
-                                {% comment %} 
-                                    COMO METER AS ESTRELAS TENDO EM CONTA A AVALIAÇÃO
-                                <div class="ratings">
-                                    {% for i in 1 to receita.avaliacao %}
+                                    {% for i in "xxxxx" %}
+                                    {% if forloop.counter <= receita.media_avaliacoes %}
                                         <i class="fa fa-star" aria-hidden="true"></i>
-                                    {% endfor %}
-                                    {% for i in 1 to (5 - receita.avaliacao) %}
+                                    {% else %}
                                         <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    {% endfor %}
-                                </div> 
-                                {% endcomment %}
+                                    {% endif %}
+                                {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
                     
-                
-
-                
-                {% endblock content %}
+    
                 
             </div>
         </div>
@@ -294,41 +121,5 @@
 
 
 
-
-    <!-- ##### Footer Area Start ##### -->
-    <footer class="footer-area">
-        <div class="container h-100">
-            <div class="row h-100">
-                <div class="col-12 h-100 d-flex flex-wrap align-items-center justify-content-between">
-                    <!-- Footer Social Info -->
-                    <div class="footer-social-info text-right">
-                        <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                    </div>
-                    <!-- Footer Logo -->
-                    <div class="footer-logo">
-                        <a href="{% url 'index' %}"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- ##### Footer Area Start ##### -->
-
-    <!-- ##### All Javascript Files ##### -->
-    <!-- jQuery-2.2.4 js -->
-    <script src="{% static 'js/jquery/jquery-2.2.4.min.js' %}"></script>
-    <!-- Popper js -->
-    <script src="{% static 'js/bootstrap/popper.min.js' %}"></script>
-    <!-- Bootstrap js -->
-    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
-    <!-- All Plugins js -->
-    <script src="{% static 'js/plugins/plugins.js' %}"></script>
-    <!-- Active js -->
-    <script src="{% static 'js/active.js' %}"></script>
-</body>
-
+{% endblock content %}
+    

@@ -1,204 +1,36 @@
+{% extends 'main.html' %}
+
 {% load static %}
-
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-    <!-- Title -->
-    <title>Delicious - Food Blog Template | Home</title>
-
-    <!-- Favicon -->
-    <link rel="icon" href="{% static 'img/core-img/favicon.ico' %}">
-
-    <!-- Core Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-
-
-
-</head>
-
-<body>
-    <!-- Preloader -->
-    <div id="preloader">
-        <i class="circle-preloader"></i>
-        <!-- <img src="{% static 'img/core-img/salad.png' %}" alt=""> -->
-    </div>
-
-    <!-- Search Wrapper -->
-    <div class="search-wrapper">
-        <!-- Close Btn -->
-        <div class="close-btn"><i class="fa fa-times" aria-hidden="true"></i></div>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <form action="#" method="post">
-                        <input type="search" name="search" placeholder="Type any keywords...">
-                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ##### Header Area Start ##### -->
-    <header class="header-area">
-
-        <!-- Top Header Area -->
-        <div class="top-header-area">
-            <div class="container h-100">
-                <div class="row h-100 align-items-center justify-content-between">
-                    <!-- Breaking News -->
-                    <div class="col-12 col-sm-6">
-                        <div class="breaking-news">
-                            <div id="breakingNewsTicker" class="ticker">
-                                <ul>
-                                    <li><a href="#">Hello World!</a></li>
-                                    <li><a href="#">Hello {{user.username}}.</a></li>
-                                    <li><a href="#">Hello Delicious!</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Top Social Info -->
-                    <div class="col-12 col-sm-6">
-                        <div class="top-social-info text-right">
-                            <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Navbar Area -->
-        <div class="delicious-main-menu">
-            <div class="classy-nav-container breakpoint-off">
-                <div class="container">
-                    <!-- Menu -->
-                    <nav class="classy-navbar justify-content-between" id="deliciousNav">
-
-                        <!-- Logo -->
-                        <a class="nav-brand" href="{% url 'index' %}"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
-
-                        <!-- Navbar Toggler -->
-                        <div class="classy-navbar-toggler">
-                            <span class="navbarToggler"><span></span><span></span><span></span></span>
-                        </div>
-
-                        <!-- Menu -->
-                        <div class="classy-menu">
-
-                            <!-- close btn -->
-                            <div class="classycloseIcon">
-                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                            </div>
-
-                            <!-- Nav Start -->
-                            <div class="classynav">
-                                <ul>
-                                    <li class="active"><a href="{% url 'index' username=user.username %}">Home</a></li>
-                                    <li class='active'><a href="{% url 'fridge' %}">Your Fridge</a></li>
-                                    <li class="active"><a href="{% url 'createRecipe' %}">Add Recipe</a></li>
-                                    <li class="active"><a href="{% url 'about' %}">About us</a></li>
-                                </ul>
-
-                                <!-- Newsletter Form -->
-                                <div class="search-btn">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </div>
-
-                            </div>
-                            <!-- Nav End -->
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- ##### Header Area End ##### -->
 
     {% block content %}
         <!-- Single Best Receipe Area -->
-        {% for receita in receitas %}
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="single-best-receipe-area mb-30">
-                    <img src="{% static 'img/bg-img/r1.jpg' %}" alt="">
-                    <div class="receipe-content">
-                        <a href="{% url 'recipePost' %}">
-                            <h5>{{receita.name}}</h5>
-                        </a>
-                        <div class="ratings">
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <i class="fa fa-star-o" aria-hidden="true"></i>
+        
+        <div class="row">
+            <!-- Single Best Receipe Area -->
+            {% for receita in receitas %}
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-best-receipe-area mb-30">
+                        {% if receita.imagem %}
+                            <img class="receita-image" src="{{ receita.imagem.url }}" alt="{{ receita.name }}" style="max-width: 350px; max-height: 150px; width: 100%; height: auto;object-fit: cover;"/>
+                        {% endif %}
+                        <div class="receipe-content">
+                            <a href="{% url 'recipepost' receita.id %}">
+                                <h5>{{receita.name}}</h5>
+                            </a>
+                            <div class="ratings">
+                                {% for i in "xxxxx" %}
+                                {% if forloop.counter <= receita.media_avaliacoes %}
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                {% else %}
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                {% endif %}
+                            {% endfor %}
+                            </div>
                         </div>
-                        {% comment %} 
-                            COMO METER AS ESTRELAS TENDO EM CONTA A AVALIAÇÃO
-                        <div class="ratings">
-                            {% for i in 1 to receita.avaliacao %}
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                            {% endfor %}
-                            {% for i in 1 to (5 - receita.avaliacao) %}
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                            {% endfor %}
-                        </div> 
-                        {% endcomment %}
                     </div>
                 </div>
-            </div>
-        {% endfor %}
-    {% endblock %}
-
-    <!-- ##### Footer Area Start ##### -->
-    <footer class="footer-area">
-        <div class="container h-100">
-            <div class="row h-100">
-                <div class="col-12 h-100 d-flex flex-wrap align-items-center justify-content-between">
-                    <!-- Footer Social Info -->
-                    <div class="footer-social-info text-right">
-                        <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                    </div>
-                    <!-- Footer Logo -->
-                    <div class="footer-logo">
-                        <a href="{% url 'index' %}"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
-                    </div>
-                    <!-- Copywrite -->
-                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                </div>
-            </div>
+            {% endfor %}
         </div>
-    </footer>
-    <!-- ##### Footer Area Start ##### -->
+    {% endblock content%}
 
-    <!-- ##### All Javascript Files ##### -->
-    <!-- jQuery-2.2.4 js -->
-    <script src="{% static 'js/jquery/jquery-2.2.4.min.js' %}"></script>
-    <!-- Popper js -->
-    <script src="{% static 'js/bootstrap/popper.min.js' %}"></script>
-    <!-- Bootstrap js -->
-    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
-    <!-- All Plugins js -->
-    <script src="{% static 'js/plugins/plugins.js' %}"></script>
-    <!-- Active js -->
-    <script src="{% static 'js/active.js' %}"></script>
-</body>
-
+   

@@ -1,9 +1,0 @@
-ONDE VOU:
-    - O template já está sintonia com django
-    - A página de index já está quase completa
-    - O template já está todo funcional, só falta o elements.html
-    - Apaguei a página de contacts porque achei desnecessária
-    - Login feito, só falta "enfeitar"
-
-O QUE TENHO DE FAZER:
-    - Fazer páginas finais

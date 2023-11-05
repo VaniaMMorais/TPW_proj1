@@ -3,12 +3,16 @@ from django.shortcuts import render,redirect
 from django.http import HttpRequest, HttpResponse, JsonResponse 
 
 from datetime import datetime
+from django.db.models import Avg
+from django.utils import timezone
+from django.shortcuts import get_object_or_404
+
 
 from webproj import settings
-from .models import Receita
+from .models import Avaliacao, Frigorifico, Ingrediente, Receita
 from .models import Categoria
 from .models import Planificacao
-from .forms import ReceitaForm, LoginForm
+from .forms import CategoryForm, FridgeForm, ComentarioForm, IngredienteForm, ReceitaForm, LoginForm
 
 
 from django.shortcuts import render, redirect
@@ -22,6 +26,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth import authenticate, login, logout
 from . tokens import generate_token
+from app import models
 
 # Create your views here.
 
@@ -38,8 +43,13 @@ def hello(request):
 
 def index(request, username):
     user = User.objects.get(username=username)
-    receitas = Receita.objects.all()
+    receitas = Receita.objects.all().annotate(media_avaliacoes=Avg('avaliacao__clasificacao'))
     return render(request, 'index.html', {'receitas': receitas, 'fname': user.first_name})
+
+def adminPage(request):
+    categorias= Categoria.objects.all()
+    ingredientes = Ingrediente.objects.all()
+    return render(request, 'adminPage.html', {'categorias': categorias, 'ingredientes': ingredientes})
 
 def loginp(request):
     return render(request,'login.html')
@@ -63,18 +73,90 @@ def elements(request):
 
 def recipepost(request, id):
     receita = Receita.objects.get(id=id)
-    return render(request,'recipe-post.html', {'receita': receita})
+    avaliacoes = Avaliacao.objects.filter(receita=receita)
+    media_avaliacoes = Avaliacao.objects.filter(receita__id=id).aggregate(media=Avg('clasificacao'))['media']
+    if request.method == 'POST':
+        form = ComentarioForm(request.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.user = request.user 
+            comentario.receita = receita 
+            comentario.data = timezone.now()
+            comentario.save()
+            
+    else:
+        form = ComentarioForm()
+    return render(request,'recipe-post.html', {'receita': receita, 'avaliacoes': avaliacoes, 'media_avaliacoes': media_avaliacoes, 'form': form})
 
 def fridge(request):
-
-    """ ingredient = None
-    for i in ingredients:
-        if i['id'] == int(pk):
-            ingredient = i """
+    user = request.user  # Obtém o usuário logado
+    frigorifico_itens = Frigorifico.objects.filter(user=user)
     
-    receitas = Receita.objects.all()
-    context = {'receitas': receitas}
+    context = {'frigorifico_itens': frigorifico_itens}
     return render(request,'fridge.html', context)
+
+def delete_item(request, item_id):
+    item = get_object_or_404(Frigorifico, id=item_id)
+    item.delete()
+    return redirect('fridge')
+
+def add_ingredient_to_fridge(request):
+    print("Fui chamado!")
+    if request.method == 'POST':
+        form = FridgeForm(request.POST)
+        if form.is_valid():
+            fridge = form.save(commit=False)
+            fridge.ingredient = form.cleaned_data['ingredient']
+            fridge.user = request.user
+            fridge.save()
+            return redirect('fridge')  # Redireciona de volta à página do frigorífico ou outra página apropriada
+
+
+    frigorifico_itens = Frigorifico.objects.filter(user=request.user)  # Certifique-se de que está obtendo a lista de itens do frigorífico
+
+    return render(request, 'fridge.html', {'form': form, 'frigorifico_itens': frigorifico_itens})
+
+def delete_category(request, cat_id):
+    categoria = get_object_or_404(Categoria, id=cat_id)
+
+    if request.method == 'POST':
+        # Realize a exclusão da categoria
+        categoria.delete()
+        return redirect('adminPage')  # Redirecione para a página de categorias ou outra página apropriada
+
+    return render(request, 'confirm_delete_category.html', {'categoria': categoria})
+
+def delete_ingredient(request, ing_id):
+    ingrediente = get_object_or_404(Ingrediente, id=ing_id)
+
+    if request.method == 'POST':
+        # Realize a exclusão do ingrediente
+        ingrediente.delete()
+        return redirect('adminPage')  # Redirecione para a página de ingredientes ou outra página apropriada
+
+    return render(request, 'confirm_delete_ingredient.html', {'ingrediente': ingrediente})
+
+
+def create_ingredient(request):
+    if request.method == 'POST':
+        ingredient = request.POST.get('ingredientName')
+        if ingredient:
+            Ingrediente.object.create(nome= ingredient)
+            return redirect('adminPage')  # Redirecione para a página apropriada
+
+    return render(request, 'create_ingredient.html')
+
+
+def create_category(request):
+    if request.method == 'POST':
+        category_name = request.POST.get('categoryName')
+        if category_name:
+            Categoria.objects.create(name=category_name)
+            return redirect('adminPage')  # Redirecione para a página que lista todas as categorias
+
+    return render(request, 'create_category.html')
+
+
 
 def createRecipe(request):
 
@@ -113,9 +195,19 @@ def deleteRecipe(request,pk):
     
     return render(request,'delete.html', {'obj' : 'recipe'})
 
-def filtered_recipies(request, cat):
-    receitas = Receita.objects.filter(category=cat)
+def filtered_recipies(request, cat=None, nome=None):
+    cat = request.GET.get('cat')
+    nome = request.GET.get('name')
+    receitas = Receita.objects.all()
+
+    if cat:
+        receitas = receitas.filter(category=cat)
+
+    if nome:
+        receitas = receitas.filter(name__icontains=nome).annotate(media_avaliacoes=Avg('avaliacao__clasificacao'))
+
     return render(request, 'filteredrecipies.html', {'receitas': receitas})
+
 
 
 def signup(request):

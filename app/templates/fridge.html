@@ -2,38 +2,28 @@
 
 {% block content %}
 
-<h1> My fridge </h1>
-
-<div>
-    <div>
-        {% for receita in receitas %}
-
-            <div>
-                <a href="{% url 'updateReceita' receita.id %}"> Edit </a>
-                <a href="{% url 'deleteRecipe' receita.id %}"> Delete </a>
-                <small>{{receita.category.name}} : </small>
-                <span>{{ receita.name}}</span>
-                <span> adicionada por {{ receita.user.username}}</span>
-                <h5> {{receita.name}} --  {{receita.description}} </h5>
-                <span>Tempo de Preparação: {{ receita.tempoPreparacao }} minutos</span>
-                <span>Tempo de Cozinhar: {{ receita.tempoCozinhar }} minutos</span>
-                <span>Quantidade de Pessoas: {{ receita.quantidadePessoas }}</span>
-                <span>Nível: {{ receita.nivel }}</span>
-                <!-- Exibindo a imagem -->
-                {% if receita.imagem %}
-                    <img src="{{ receita.imagem.url }}" alt="{{ receita.name }}"/>
-                {% endif %}
-
-                <h6>Ingredientes:</h6>
-                <ul>
-                    {% for receitaingrediente in receita.receitaingrediente_set.all %}
-                        <li>{{ receitaingrediente.ingrediente.nome }} ({{ receitaingrediente.quantidade }})</li>
-                    {% endfor %}
-                </ul>
-                
-            </div>
-        
-        {% endfor %}
+<div class="container">
+    <h1 class="mt-5">My Fridge</h1>
+    <div class="row mt-4">
+        <div class="col-lg-6">
+            <ul class="list-group">
+                {% for item in frigorifico_itens %}
+                <li class="list-group-item">
+                    {{ item.ingredient.nome }}
+                    <a href="{% url 'delete_item' item.id %}" class="btn btn-danger btn-sm float-right">Delete</a>
+                </li>
+                {% empty %}
+                <li class="list-group-item">Your fridge is empty.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-lg-6">
+            <form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit" class="btn btn-primary">Adicionar Ingrediente</button>
+            </form>
+        </div>
     </div>
 </div>
 

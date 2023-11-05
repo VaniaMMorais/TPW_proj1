@@ -1378,3 +1378,11 @@ textarea:focus {
     padding-left: 30px; }
 
 /*# sourceMappingURL=style.css.map */
+
+.receita-image{
+  max-width: 200px; /* Largura máxima desejada */
+  max-height: 150px; /* Altura máxima desejada */
+  width: 100%; /* Para manter a proporção da imagem */
+  height: auto; /* Para manter a proporção da imagem */
+  object-fit: cover; /* Ou 'contain' ou outro valor adequado */
+}
