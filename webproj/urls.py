@@ -37,11 +37,7 @@ urlpatterns = [
     path('recipe-post/', views.recipepost, name='recipePost'),
     path('login/', views.login, name='login'),
 
-    path('planner/', views.planner, name='planner'), 
-    path('all_events/', views.all_events, name='all_events'), 
-    path('add_event/', views.add_event, name='add_event'), 
-    path('update/', views.update, name='update'),
-    path('remove/', views.remove, name='remove'),
+
 ]
 
 if settings.DEBUG:

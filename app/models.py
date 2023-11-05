@@ -105,7 +105,7 @@ class ListaCompras(models.Model):
     def __str__(self):
         return f"{self.ingredient.nome} na lista de compras de {self.user.username}"
 
-# Modelo para Receitas_Planificacao
+""" # Modelo para Receitas_Planificacao
 class Planificacao(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -117,4 +117,11 @@ class Planificacao(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Plano de {self.receita.name} para {self.user.username}"
+        return f"Plano de {self.receita.name} para {self.user.username}" """
+
+# Create your models here.
+class Events(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255,null=True,blank=True)
+    start = models.DateTimeField(null=True,blank=True)
+    end = models.DateTimeField(null=True,blank=True)    
