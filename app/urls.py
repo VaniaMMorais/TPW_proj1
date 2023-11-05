@@ -19,5 +19,12 @@ urlpatterns = [
     path('updaterecipe/<str:pk>',  views.updateReceita, name = "updateReceita"),
     path('deleterecipe/<str:pk>',  views.deleteRecipe, name = "deleteRecipe"),
 
+    path('planner/', views.planner, name='planner'),
+    path('all_events/', views.all_events, name='all_events'), 
+    path('add_event/', views.add_event, name='add_event'), 
+    path('update/', views.update, name='update'),
+    path('remove/', views.remove, name='remove'),
+
+
 
 ]

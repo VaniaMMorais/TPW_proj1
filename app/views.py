@@ -3,11 +3,14 @@ from django.shortcuts import render,redirect
 from django.http import HttpRequest, HttpResponse, JsonResponse 
 
 from datetime import datetime
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.views import generic
+from django.utils.safestring import mark_safe
 
 from webproj import settings
-from .models import Receita
+from .models import Receita, Events
 from .models import Categoria
-from .models import Planificacao
 from .forms import ReceitaForm, LoginForm
 
 
@@ -22,6 +25,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth import authenticate, login, logout
 from . tokens import generate_token
+
 
 # Create your views here.
 
@@ -202,21 +206,21 @@ def signout(request):
     messages.success(request, "Logged Out Successfully!!")
     return redirect('loginp')
 
-# VIEWS para a PLANIFICAÇÃO
+
+# Planner 
 def planner(request):  
-    all_events = Planificacao.objects.all()
+    all_events = Events.objects.all()
     context = {
         "events":all_events,
     }
     return render(request,'planner.html',context)
  
 def all_events(request):                                                                                                 
-    all_events = Planificacao.objects.all()                                                                                    
+    all_events = Events.objects.all()                                                                                    
     out = []                                                                                                             
     for event in all_events:                                                                                             
         out.append({                                                                                                     
-            'recipe': event.receita.name,    
-            'categoria': event.category,                                                                             
+            'title': event.name,                                                                                         
             'id': event.id,                                                                                              
             'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),                                                         
             'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),                                                             
@@ -227,49 +231,28 @@ def all_events(request):
 def add_event(request):
     start = request.GET.get("start", None)
     end = request.GET.get("end", None)
-    recipe = request.GET.get("recipe", None)
-    category = request.GET.get("category", None)
-    
-    # Certifique-se de que a receita e a categoria sejam válidas
-    if recipe and category:
-        event = Planificacao(
-            receita=Receita.objects.get(id=recipe), 
-            category=CategoriaRefeicao.objects.get(id=category),
-            start=start, 
-            end=end
-        )
-        event.save()
-    
+    title = request.GET.get("title", None)
+    event = Events(name=str(title), start=start, end=end)
+    event.save()
     data = {}
     return JsonResponse(data)
-
+ 
 def update(request):
     start = request.GET.get("start", None)
     end = request.GET.get("end", None)
-    recipe = request.GET.get("recipe", None)
+    title = request.GET.get("title", None)
     id = request.GET.get("id", None)
-    category = request.GET.get("category", None)
-
-    if id:
-        event = Planificacao.objects.get(id=id)
-        event.start = start
-        event.end = end
-
-        # Certifique-se de que a receita e a categoria sejam válidas
-        if recipe and category:
-            event.receita = Receita.objects.get(id=recipe)
-            event.category = CategoriaRefeicao.objects.get(id=category)
-
-        event.save()
-
+    event = Events.objects.get(id=id)
+    event.start = start
+    event.end = end
+    event.name = title
+    event.save()
     data = {}
     return JsonResponse(data)
  
 def remove(request):
     id = request.GET.get("id", None)
-    event = Planificacao.objects.get(id=id)
+    event = Events.objects.get(id=id)
     event.delete()
     data = {}
     return JsonResponse(data)
-
-
