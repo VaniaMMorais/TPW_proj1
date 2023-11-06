@@ -42,7 +42,12 @@ def hello(request):
 def index(request, username):
     user = User.objects.get(username=username)
     receitas = Receita.objects.all().annotate(media_avaliacoes=Avg('avaliacao__clasificacao'))
-    return render(request, 'index.html', {'receitas': receitas, 'fname': user.first_name})
+
+    nreceitas = Receita.objects.all().count()
+    nvegan = Receita.objects.filter(category=13).count()
+    ncarne = Receita.objects.filter(category=6).count()
+    nsobremesa = Receita.objects.filter(category=9).count()
+    return render(request, 'index.html', {'receitas': receitas, 'fname': user.first_name, "nreceitas": nreceitas, "nvegan": nvegan, "ncarne": ncarne, "nsobremesa": nsobremesa})
 
 def adminPage(request):
     categorias= Categoria.objects.all()
