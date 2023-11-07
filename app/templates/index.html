@@ -29,7 +29,11 @@
                             <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
                                 <h2 data-animation="fadeInUp" data-delay="300ms">Add your own recipes</h2>
                                 <p data-animation="fadeInUp" data-delay="700ms">Be a chef in your own kitchen! Our platform offers you the opportunity to share your exclusive recipes with the community of food lovers. Add your special creations, describe the ingredients and preparation steps, and inspire others to try your delicious recipes.</p>
-                                <a href="{% url 'createRecipe' %}" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Add Recipe</a>
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'createRecipe' %}" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Add Recipe</a>
+                                {% else %}
+                                    <a href="{% url 'loginp' %}" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Log In to Add Recipe</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -44,7 +48,11 @@
                             <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
                                 <h2 data-animation="fadeInUp" data-delay="300ms">Tell us what's in your fridge</h2>
                                 <p data-animation="fadeInUp" data-delay="700ms">Open the virtual doors of your personal refrigerator. Here, you can organize and manage all the ingredients you have available in your pantry. Keep track of fresh items, essential products and specialty ingredients. You can add, remove, and update items as needed, ensuring you're always ready to create your favorite recipes. Keep your digital fridge well stocked and never run out of ideas for your next meals.</p>
-                                <a href="{% url 'fridge' %}" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Your fridge</a>
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'fridge' %}" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Add Recipe</a>
+                                {% else %}
+                                    <a href="{% url 'loginp' %}" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Log In to See Your Fridge</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

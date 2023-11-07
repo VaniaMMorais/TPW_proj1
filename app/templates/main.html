@@ -1,6 +1,5 @@
 {% load static %}
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="">
@@ -16,36 +15,33 @@
 
     <!-- Core Stylesheet -->
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-
-
-
 </head>
 
 <body>
     <!-- Preloader -->
     <div id="preloader">
         <i class="circle-preloader"></i>
-        <!-- <img src="{% static 'img/core-img/salad.png' %}" alt=""> -->
+        <img src="{% static 'img/core-img/pizza.png' %}" alt="">
     </div>
 
     <!-- Search Wrapper -->
-<div class="search-wrapper">
-    <!-- Close Btn -->
-    <div class="close-btn"><i class="fa fa-times" aria-hidden="true" style="padding-top: 20px; font-size: 20px"></i></div>
+    <div class="search-wrapper">
+        <!-- Close Btn -->
+        <div class="close-btn"><i class="fa fa-times" aria-hidden="true" style="padding-top: 20px; font-size: 20px"></i></div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <form action="{% url 'filtered_recipies' %}" method="get">
-                    <div class="form-group">
-                        <input type="text" name="name" id="name" placeholder="Search recipes here">
-                    </div>
-                    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </form>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form action="{% url 'filtered_recipies' %}" method="get">
+                        <div class="form-group">
+                            <input type="text" name="name" id="name" placeholder="Search recipes here">
+                        </div>
+                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
     <!-- ##### Header Area Start ##### -->
@@ -61,7 +57,11 @@
                             <div id="breakingNewsTicker" class="ticker">
                                 <ul>
                                     <li><a href="#">Hello World!</a></li>
-                                    <li><a href="#">Hello {{user.username}}!</a></li>
+                                    {% if user.is_authenticated %}
+                                        <li><a href="#">Hello {{user.username}}!</a></li>
+                                    {% else %}
+                                        <li><a href="#">Welcome to Delicious, Food Blog!</a></li>
+                                    {% endif %}
                                     <li><a href="#">Hello Delicious!</a></li>
                                 </ul>
                             </div>
@@ -79,27 +79,6 @@
                             <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
                         </div>
                     </div>
-
-                    <!-- Top Social Info -->
-                    <!--
-                    <div class="col-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="top-social-info text-right">
-                                    <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <button class="btn" type="submit"><a href="{% url 'signout' %}">SignOut</a></button>
-                            </div>
-                        </div>
-                    </div>
-                    -->
                 </div>
             </div>
         </div>
@@ -112,7 +91,7 @@
                     <nav class="classy-navbar justify-content-between" id="deliciousNav">
 
                         <!-- Logo -->
-                        <a class="nav-brand" href="{% url 'index' username=user.username %}"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
+                        <a class="nav-brand" href="{% url 'index' %}"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
@@ -130,9 +109,11 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}"><a href="{% url 'index' username=user.username %}">Home</a></li>
+                                    <li class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}"><a href="{% url 'index' %}">Home</a></li>
                                     <li class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}"><a href="{% url 'about' %}">About us</a></li>
-                                    <li><a href="#">Profile</a>
+
+                                    {% if user.is_authenticated %}
+                                        <li><a href="#">Profile</a>
                                         <ul class="dropdown">
                                             <li><a href="{% url 'createRecipe' %}">My Recipes</a></li>
                                             <li><a href="{% url 'fridge' %}">My Fridge</a></li>
@@ -142,6 +123,10 @@
                                             <li><a href="{% url 'signout' %}">Logout</a></li>
                                         </ul>
                                     </li>
+                                    {% else %}
+                                        <li class="{% if request.resolver_match.url_name == 'loginp' or request.resolver_match.url_name == 'signin' or request.resolver_match.url_name == 'signup' %}active{% endif %}"><a href="{% url 'loginp' %}">Login / Register</a></li>
+                                    {% endif %}
+
                                     {% if user.is_superuser%}
                                     <li class="{% if request.resolver_match.url_name == 'adminPage' %}active{% endif %}"><a href="{% url 'adminPage' %}">Admin</a></li>
                                     {% endif %}
@@ -163,7 +148,7 @@
     <!-- ##### Header Area End ##### -->
 
     {% block content %}
-    
+
     {% endblock %}
 
     <!-- ##### Footer Area Start ##### -->
@@ -215,5 +200,17 @@
     <script src="{% static 'js/plugins/plugins.js' %}"></script>
     <!-- Active js -->
     <script src="{% static 'js/active.js' %}"></script>
-</body>
 
+    <script>
+        $(document).ready(function(){
+            var owl = $('.owl-not-carousel');
+            owl.owlCarousel({
+                items: 1,
+                autoplay: false,
+            });
+
+            owl.trigger('stop.owl.autoplay');
+            owl.trigger('destroy.owl.carousel');
+        });
+    </script>
+</body>

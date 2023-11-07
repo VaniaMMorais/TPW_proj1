@@ -38,15 +38,17 @@ def hello(request):
     return HttpResponse("Hello World!")
 
 
-def index(request, username):
-    user = User.objects.get(username=username)
+def index(request, username=None):
+    if username: user = User.objects.get(username=username)
+    else: user = request.user
+    # user = User.objects.get(username=username)
     receitas = Receita.objects.all().annotate(media_avaliacoes=Avg('avaliacao__clasificacao'))
 
     nreceitas = Receita.objects.all().count()
     nvegan = Receita.objects.filter(category=13).count()
     ncarne = Receita.objects.filter(category=6).count()
     nsobremesa = Receita.objects.filter(category=9).count()
-    return render(request, 'index.html', {'receitas': receitas, 'fname': user.first_name, "nreceitas": nreceitas, "nvegan": nvegan, "ncarne": ncarne, "nsobremesa": nsobremesa})
+    return render(request, 'index.html', {'receitas': receitas, "nreceitas": nreceitas, "nvegan": nvegan, "ncarne": ncarne, "nsobremesa": nsobremesa})
 
 def adminPage(request):
     categorias= Categoria.objects.all()
@@ -234,23 +236,23 @@ def signup(request):
 
         if User.objects.filter(username=username):
             messages.error(request, "Username already exist! Please try some other username.")
-            return redirect('loginp')
+            return redirect('signup')
 
         if User.objects.filter(email=email).exists():
-            messages.error(request, "Email Already Registered!!")
-            return redirect('loginp')
+            messages.error(request, "Email already registered!!")
+            return redirect('signup')
 
         if len(username) > 20:
             messages.error(request, "Username must be under 20 charcters!!")
-            return redirect('loginp')
+            return redirect('signup')
 
         if pass1 != pass2:
             messages.error(request, "Passwords didn't matched!!")
-            return redirect('loginp')
+            return redirect('signup')
 
         if not username.isalnum():
             messages.error(request, "Username must be Alpha-Numeric!!")
-            return redirect('loginp')
+            return redirect('signup')
 
         myuser = User.objects.create_user(username, email, pass1)
         myuser.first_name = fname
@@ -260,7 +262,6 @@ def signup(request):
         myuser.save()
         messages.success(request,
                          "Your Account has been created succesfully!! Please check your email to confirm your email address in order to activate your account.")
-
 
         return redirect('signin')
 
@@ -294,18 +295,18 @@ def signin(request):
 
         if user is not None:
             login(request, user)
-            return redirect('index', username=user.username)
+            return redirect('index')
         else:
             messages.error(request, "Bad Credentials!!")
-            return redirect('loginp')
+            return redirect('signin')
 
     return render(request, "signin.html")
 
 
 def signout(request):
     logout(request)
-    messages.success(request, "Logged Out Successfully!!")
-    return redirect('loginp')
+    #messages.success(request, "Logged Out Successfully!!")
+    return redirect('index')
 
 
 # Planner 

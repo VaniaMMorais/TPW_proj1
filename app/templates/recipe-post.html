@@ -24,13 +24,14 @@
                             <img src="{% static "img/blog-img/1.jpg" %}%}" alt="" style="object-fit: cover; height:400px">
                         {%endif%}
                     </div> {% endcomment %}
-                    <div class="receipe-slider owl-carousel">
+                    <div class="receipe-slider owl-carousel owl-not-carousel" style="display: block;">
                         {% if receita.imagem %}
-                            <img src="{{ receita.imagem.url }}" alt="" style="object-fit: cover; height: 400px">
+                            <img src="{{ receita.imagem.url }}" alt="" style="object-fit: cover; height: 400px; width: 100%">
                         {% else %}
-                            <img src="{% static "img/blog-img/1.jpg" %}" alt="" style="object-fit: cover; height: 400px">
+                            <img src="{% static "img/blog-img/1.jpg" %}" alt="" style="object-fit: cover; height: 400px; width: 100%">
                         {% endif %}
                     </div>
+
                     
                 </div>
             </div>
@@ -158,27 +159,29 @@
                 </div>
                 
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="section-heading text-left">
-                            <h3>Leave a comment</h3>
+                {% if user.is_authenticated %}
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="section-heading text-left">
+                                <h3>Leave a comment</h3>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-12">
-                        <div class="contact-form-area">
-                            <form method="post">
-                                {% csrf_token %}
-                                {{ form.as_p }}
-                                <div class="col-12">
-                                    <button class="btn delicious-btn mt-30" type="submit">Post Comments</button>
-                                </div>
-                            </form>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="contact-form-area">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <div class="col-12">
+                                        <button class="btn delicious-btn mt-30" type="submit">Post Comments</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endif %}
                 
             </div>
         </div>
