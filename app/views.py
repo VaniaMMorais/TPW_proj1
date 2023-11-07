@@ -1,8 +1,7 @@
 from django.contrib.auth import authenticate
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from django.http import HttpRequest, HttpResponse, JsonResponse 
-
-from datetime import datetime
+from django.utils import timezone
 
 from webproj import settings
 from .models import Avaliacao, Frigorifico, Ingrediente, Receita, Events
@@ -78,6 +77,7 @@ def recipepost(request, id):
     receita = Receita.objects.get(id=id)
     avaliacoes = Avaliacao.objects.filter(receita=receita)
     media_avaliacoes = Avaliacao.objects.filter(receita__id=id).aggregate(media=Avg('clasificacao'))['media']
+    user_fridge = Frigorifico.objects.filter(user=request.user).values_list('ingredient', flat=True)
     if request.method == 'POST':
         form = ComentarioForm(request.POST)
         if form.is_valid():
@@ -89,14 +89,17 @@ def recipepost(request, id):
             
     else:
         form = ComentarioForm()
-    return render(request,'recipe-post.html', {'receita': receita, 'avaliacoes': avaliacoes, 'media_avaliacoes': media_avaliacoes, 'form': form})
+    return render(request,'recipe-post.html', {'receita': receita, 'avaliacoes': avaliacoes, 'media_avaliacoes': media_avaliacoes, 'form': form, 'user_fridge': user_fridge})
 
 def fridge(request):
     user = request.user  # Obtém o usuário logado
     frigorifico_itens = Frigorifico.objects.filter(user=user)
-    
-    context = {'frigorifico_itens': frigorifico_itens}
-    return render(request,'fridge.html', context)
+    ingredients = Ingrediente.objects.all()
+
+    form = FridgeForm()  # Crie uma instância do formulário FridgeForm
+
+    context = {'frigorifico_itens': frigorifico_itens, 'ingredients': ingredients, 'form': form}
+    return render(request, 'fridge.html', context)
 
 def delete_item(request, item_id):
     item = get_object_or_404(Frigorifico, id=item_id)
@@ -104,20 +107,27 @@ def delete_item(request, item_id):
     return redirect('fridge')
 
 def add_ingredient_to_fridge(request):
-    print("Fui chamado!")
     if request.method == 'POST':
         form = FridgeForm(request.POST)
         if form.is_valid():
             fridge = form.save(commit=False)
             fridge.ingredient = form.cleaned_data['ingredient']
             fridge.user = request.user
+            fridge.data = timezone.now()  # Defina a data atual
+            fridge.checklist = False
             fridge.save()
             return redirect('fridge')  # Redireciona de volta à página do frigorífico ou outra página apropriada
+    else:
+        form = FridgeForm()  # Crie uma instância do formulário FridgeForm
+
+    frigorifico_itens = Frigorifico.objects.filter(user=request.user)
+    ingredients = Ingrediente.objects.all()
+
+    return render(request, 'fridge.html', {'form': form, 'frigorifico_itens': frigorifico_itens, 'ingredients': ingredients})
 
 
-    frigorifico_itens = Frigorifico.objects.filter(user=request.user)  # Certifique-se de que está obtendo a lista de itens do frigorífico
 
-    return render(request, 'fridge.html', {'form': form, 'frigorifico_itens': frigorifico_itens})
+
 
 def delete_category(request, cat_id):
     categoria = get_object_or_404(Categoria, id=cat_id)
@@ -144,7 +154,7 @@ def create_ingredient(request):
     if request.method == 'POST':
         ingredient = request.POST.get('ingredientName')
         if ingredient:
-            Ingrediente.object.create(nome= ingredient)
+            Ingrediente.objects.create(nome= ingredient)
             return redirect('adminPage')  # Redirecione para a página apropriada
 
     return render(request, 'create_ingredient.html')
@@ -165,10 +175,11 @@ def createRecipe(request):
 
     form = ReceitaForm()
     if request.method == 'POST':
-        #print(request.POST) printa o dicionário da informação que vai para a base de dados
         form = ReceitaForm(request.POST)
         if form.is_valid():
-            form.save()
+            receita = form.save(commit=False)
+            receita.user = request.user  
+            receita.save()
             if request.user.is_authenticated:
                 return redirect('index', username=request.user.username)
 
@@ -199,7 +210,6 @@ def deleteRecipe(request,pk):
     return render(request,'delete.html', {'obj' : 'recipe'})
 
 def filtered_recipies(request, cat=None, nome=None):
-    cat = request.GET.get('cat')
     nome = request.GET.get('name')
     receitas = Receita.objects.all()
 

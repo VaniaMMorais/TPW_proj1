@@ -56,7 +56,7 @@ class Receita(models.Model):
 class ReceitaIngrediente(models.Model):
     receita = models.ForeignKey(Receita, on_delete=models.CASCADE)
     ingrediente = models.ForeignKey(Ingrediente, on_delete=models.CASCADE)
-    quantidade = models.FloatField()
+    quantidade = models.FloatField(default=1.0)
 
     def __str__(self):
         return f"{self.ingrediente.nome} em {self.receita.name}"

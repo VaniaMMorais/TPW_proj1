@@ -13,11 +13,25 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
+                    {% comment %} <div class="receipe-slider owl-carousel">
+                        {%if receita.imagem.url %}
+                            <img src="{{ receita.imagem.url }}" alt="" style="object-fit: cover; height:400px">
+                            <img src="{{ receita.imagem.url }}" alt="" style="object-fit: cover; height:400px">
+                            <img src="{{ receita.imagem.url }}" alt="" style="object-fit: cover; height:400px">
+                        {%else%}
+                            <img src="{% static "img/blog-img/1.jpg" %}%}" alt="" style="object-fit: cover; height:400px">
+                            <img src="{% static "img/blog-img/1.jpg" %}%}" alt="" style="object-fit: cover; height:400px">
+                            <img src="{% static "img/blog-img/1.jpg" %}%}" alt="" style="object-fit: cover; height:400px">
+                        {%endif%}
+                    </div> {% endcomment %}
                     <div class="receipe-slider owl-carousel">
-                        <img src="{{ receita.imagem.url }}" alt="" style="object-fit: cover; height:400px">
-                        <img src="{{ receita.imagem.url }}" alt="" style="object-fit: cover; height:400px">
-                        <img src="{{ receita.imagem.url }}" alt="" style="object-fit: cover; height:400px">
+                        {% if receita.imagem %}
+                            <img src="{{ receita.imagem.url }}" alt="" style="object-fit: cover; height: 400px">
+                        {% else %}
+                            <img src="{% static "img/blog-img/1.jpg" %}" alt="" style="object-fit: cover; height: 400px">
+                        {% endif %}
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -67,13 +81,15 @@
                     <div class="col-12 col-lg-4">
                         <div class="ingredients">
                             <h4>Ingredients</h4>
-                            {% for ingredientes in receita.receitaingrediente_set.all%}
+                            {% for ingredientes in receita.receitaingrediente_set.all %}
                                 <!-- Custom Checkbox -->
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                    <label class="custom-control-label" for="customCheck1">{{ ingredientes.ingrediente.nome }} ({{ ingredientes.quantidade }})</label>
+                                    <input type="checkbox" class="custom-control-input" id="customCheck{{ forloop.counter }}" {% if ingredientes.ingrediente.id in user_fridge %}checked{% endif %}>
+                                    <label class="custom-control-label" for="customCheck{{ forloop.counter }}">
+                                        {{ ingredientes.ingrediente.nome }} ({{ ingredientes.quantidade }})
+                                    </label>
                                 </div>
-                            {% endfor%}
+                            {% endfor %}
 
                         </div>
                     </div>

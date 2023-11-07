@@ -6,7 +6,8 @@ from .models import Avaliacao, Categoria, Frigorifico, Ingrediente, Receita
 class ReceitaForm(ModelForm):
     class Meta:
         model = Receita
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ['user'] 
 
 class LoginForm(forms.Form):
     username = forms.CharField()
