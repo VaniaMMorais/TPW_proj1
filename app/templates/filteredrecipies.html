@@ -1,36 +1,40 @@
 {% extends 'main.html' %}
 
 {% load static %}
+{% block content %}
 
-    {% block content %}
-        <!-- Single Best Receipe Area -->
-        
-        <div class="row">
-            <!-- Single Best Receipe Area -->
-            {% for receita in receitas %}
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="single-best-receipe-area mb-30">
-                        {% if receita.imagem %}
-                            <img class="receita-image" src="{{ receita.imagem.url }}" alt="{{ receita.name }}" style="max-width: 350px; max-height: 150px; width: 100%; height: auto;object-fit: cover;"/>
-                        {% endif %}
-                        <div class="receipe-content">
-                            <a href="{% url 'recipepost' receita.id %}">
-                                <h5>{{receita.name}}</h5>
-                            </a>
-                            <div class="ratings">
-                                {% for i in "xxxxx" %}
-                                {% if forloop.counter <= receita.media_avaliacoes %}
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                {% else %}
-                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                {% endif %}
-                            {% endfor %}
+    <!-- Single Best Receipe Area -->
+    <section class="best-receipe-area" style="padding-top:50px"  id="best-receipe-section">
+        <div class="container">
+            <div class="row">
+                <!-- Single Best Receipe Area -->
+                {% for receita in receitas %}
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="single-best-receipe-area mb-30">
+                            {% if receita.imagem %}
+                                <img class="receita-image" src="{{ receita.imagem.url }}" alt="{{ receita.name }}" style="max-width: 350px; max-height: 150px; width: 100%; height: auto;object-fit: cover;"/>
+                            {% endif %}
+                            <div class="receipe-content">
+                                <a href="{% url 'recipepost' receita.id %}">
+                                    <h5>{{receita.name}}</h5>
+                                </a>
+                                <div class="ratings">
+                                    {% for i in "xxxxx" %}
+                                    {% if forloop.counter <= receita.media_avaliacoes %}
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    {% else %}
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    {% endif %}
+                                {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-    {% endblock content%}
+    </section>
+
+{% endblock content%}
 
    
