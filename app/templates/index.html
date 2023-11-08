@@ -12,9 +12,9 @@
                     <div class="row h-100 align-items-center">
                         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                             <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
-                                <h2 data-animation="fadeInUp" data-delay="300ms">Discover new recipies</h2>
+                                <h2 data-animation="fadeInUp" data-delay="300ms">Discover new recipes</h2>
                                 <p data-animation="fadeInUp" data-delay="700ms">Explore a variety of delicious recipes available. From main dishes to incredible desserts, discover new flavors, get inspired and start cooking your own gastronomic creations.</p>
-                                <a href="#best-receipe-section" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">See Recipies</a>
+                                <a href="#best-receipe-section" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">See Recipes</a>
                             </div>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                                 {% if user.is_authenticated %}
                                     <a href="{% url 'createRecipe' %}" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Add Recipe</a>
                                 {% else %}
-                                    <a href="{% url 'loginp' %}" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Log In to Add Recipe</a>
+                                    <a href="{% url 'loginp' %}" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Login to Add Recipe</a>
                                 {% endif %}
                             </div>
                         </div>
@@ -49,9 +49,9 @@
                                 <h2 data-animation="fadeInUp" data-delay="300ms">Tell us what's in your fridge</h2>
                                 <p data-animation="fadeInUp" data-delay="700ms">Open the virtual doors of your personal refrigerator. Here, you can organize and manage all the ingredients you have available in your pantry. Keep track of fresh items, essential products and specialty ingredients. You can add, remove, and update items as needed, ensuring you're always ready to create your favorite recipes. Keep your digital fridge well stocked and never run out of ideas for your next meals.</p>
                                 {% if user.is_authenticated %}
-                                    <a href="{% url 'fridge' %}" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Add Recipe</a>
+                                    <a href="{% url 'fridge' %}" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">See Your Fridge</a>
                                 {% else %}
-                                    <a href="{% url 'loginp' %}" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Log In to See Your Fridge</a>
+                                    <a href="{% url 'loginp' %}" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Login to See Your Fridge</a>
                                 {% endif %}
                             </div>
                         </div>
@@ -69,7 +69,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-heading">
-                        <h3>All Recipies</h3>
+                        <h3>All Recipes</h3>
                     </div>
                 </div>
             </div>
@@ -114,9 +114,9 @@
                 <div class="col-12">
                     <!-- Cta Content -->
                     <div class="cta-content text-center">
-                        <h2>Vegetarian Recipies</h2>
+                        <h2>Vegetarian Recipes</h2>
                         <p>Explore our collection of delicious vegetarian recipes, crafted with care to delight your taste buds. Let the culinary journey begin!</p>
-                        <a href="{% url 'filtered_recipies' cat=12 %}" class="btn delicious-btn">Discover all the receipies</a>
+                        <a href="{% url 'filtered_recipies' cat=12 %}" class="btn delicious-btn">Discover all the recipes</a>
                     </div>
                 </div>
             </div>
@@ -136,7 +136,7 @@
                     <div class="single-cool-fact">
                         <img src="{% static 'img/core-img/hamburger.png' %}" alt="">
                         <h3><span class="counter">{{nreceitas}}</span></h3>
-                        <h6>Amazing Recipes</h6>
+                        <h6 style="font-weight: lighter;">Amazing Recipes</h6>
                     </div>
                 </div>
 
@@ -145,7 +145,7 @@
                     <div class="single-cool-fact">
                         <img src="{% static 'img/core-img/salad.png' %}" alt="">
                         <h3><span class="counter">{{nvegan}}</span></h3>
-                        <h6>Vegan Recipes</h6>
+                        <h6 style="font-weight: lighter;">Vegan Recipes</h6>
                     </div>
                 </div>
 
@@ -154,7 +154,7 @@
                     <div class="single-cool-fact">
                         <img src="{% static 'img/core-img/rib.png' %}" alt="">
                         <h3><span class="counter">{{ncarne}}</span></h3>
-                        <h6>Meat Recipes</h6>
+                        <h6 style="font-weight: lighter;">Meat Recipes</h6>
                     </div>
                 </div>
 
@@ -163,7 +163,7 @@
                     <div class="single-cool-fact">
                         <img src="{% static 'img/core-img/pancake.png' %}" alt="">
                         <h3><span class="counter">{{nsobremesa}}</span></h3>
-                        <h6>Desert Recipes</h6>
+                        <h6 style="font-weight: lighter;">Desert Recipes</h6>
                     </div>
                 </div>
             </div>

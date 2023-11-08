@@ -79,7 +79,11 @@ def recipepost(request, id):
     receita = Receita.objects.get(id=id)
     avaliacoes = Avaliacao.objects.filter(receita=receita)
     media_avaliacoes = Avaliacao.objects.filter(receita__id=id).aggregate(media=Avg('clasificacao'))['media']
-    user_fridge = Frigorifico.objects.filter(user=request.user).values_list('ingredient', flat=True)
+
+    user_fridge = []
+    if request.user.is_authenticated:
+        user_fridge = Frigorifico.objects.filter(user=request.user).values_list('ingredient', flat=True)
+
     if request.method == 'POST':
         form = ComentarioForm(request.POST)
         if form.is_valid():
@@ -102,6 +106,13 @@ def fridge(request):
 
     context = {'frigorifico_itens': frigorifico_itens, 'ingredients': ingredients, 'form': form}
     return render(request, 'fridge.html', context)
+
+def favorites(request):
+    return render(request, 'favorites.html')
+
+
+def myrecipes(request):
+    return render(request, 'myrecipes.html')
 
 def delete_item(request, item_id):
     item = get_object_or_404(Frigorifico, id=item_id)
@@ -126,9 +137,6 @@ def add_ingredient_to_fridge(request):
     ingredients = Ingrediente.objects.all()
 
     return render(request, 'fridge.html', {'form': form, 'frigorifico_itens': frigorifico_itens, 'ingredients': ingredients})
-
-
-
 
 
 def delete_category(request, cat_id):

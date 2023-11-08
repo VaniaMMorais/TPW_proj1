@@ -1,0 +1,96 @@
+{% extends 'main.html' %}
+
+{% load static %}
+{% block content %}
+
+
+    <!-- ##### Best Recipe Area Start ##### -->
+    <section class="best-receipe-area" style="padding-top:50px"  id="best-receipe-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading">
+                        <h3>My Recipes</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-best-receipe-area mb-30">
+                        <img class="receita-image" src="url({% static 'img/receitas-img/geladoChocolate.jpg' %})" style="max-width: 350px; max-height: 150px; width: 100%; height: auto;object-fit: cover;"/>
+                        <div class="receipe-content">
+                            <a href="#">
+                                <h5>Gelado Chocolate</h5>
+                            </a>
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-best-receipe-area mb-30">
+                        <img class="receita-image" src="url({% static 'img/receitas-img/geladoChocolate.jpg' %})" style="max-width: 350px; max-height: 150px; width: 100%; height: auto;object-fit: cover;"/>
+                        <div class="receipe-content">
+                            <a href="#">
+                                <h5>Gelado Chocolate</h5>
+                            </a>
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-best-receipe-area mb-30">
+                        <img class="receita-image" src="url({% static 'img/receitas-img/geladoChocolate.jpg' %})" style="max-width: 350px; max-height: 150px; width: 100%; height: auto;object-fit: cover;"/>
+                        <div class="receipe-content">
+                            <a href="#">
+                                <h5>Gelado Chocolate</h5>
+                            </a>
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-best-receipe-area mb-30">
+                        <img class="receita-image" src="url({% static 'img/receitas-img/geladoChocolate.jpg' %})" style="max-width: 350px; max-height: 150px; width: 100%; height: auto;object-fit: cover;"/>
+                        <div class="receipe-content">
+                            <a href="#">
+                                <h5>Gelado Chocolate</h5>
+                            </a>
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <a href="{% url 'createRecipe' %}" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Add A New Recipe</a>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Best Receipe Area End ##### -->
+
+{% endblock content %}
+    

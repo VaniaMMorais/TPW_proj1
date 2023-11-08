@@ -115,10 +115,10 @@
                                     {% if user.is_authenticated %}
                                         <li><a href="#">Profile</a>
                                         <ul class="dropdown">
-                                            <li><a href="{% url 'createRecipe' %}">My Recipes</a></li>
+                                            <li><a href="{% url 'myrecipes' %}">My Recipes</a></li>
                                             <li><a href="{% url 'fridge' %}">My Fridge</a></li>
                                             <li><a href="{% url 'about' %}">My Shoplist</a></li>
-                                            <li><a href="{% url 'about' %}">Favorites</a></li>
+                                            <li><a href="{% url 'favorites' %}">Favorites</a></li>
                                             <li><a href="{% url 'about' %}">Settings</a></li>
                                             <li><a href="{% url 'signout' %}">Logout</a></li>
                                         </ul>

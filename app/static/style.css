@@ -1386,3 +1386,8 @@ textarea:focus {
   height: auto; /* Para manter a proporção da imagem */
   object-fit: cover; /* Ou 'contain' ou outro valor adequado */
 }
+
+h3 {
+  color: #2f2f2f;
+  font-weight: lighter;
+}
