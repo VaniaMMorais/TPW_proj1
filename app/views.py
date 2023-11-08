@@ -183,7 +183,7 @@ def createRecipe(request):
             receita.user = request.user  
             receita.save()
             if request.user.is_authenticated:
-                return redirect('index', username=request.user.username)
+                return redirect('index')
 
     context = {'form': form}
     return render(request,'newrecipe.html', context)
@@ -197,7 +197,7 @@ def updateReceita(request,pk):
         if form.is_valid():
             form.save()
             if request.user.is_authenticated:
-                return redirect('index', username=request.user.username)
+                return redirect('index')
 
     context = {'form': form}
     return render(request,'newrecipe.html', context)
@@ -207,7 +207,7 @@ def deleteRecipe(request,pk):
     if request.method == 'POST':
         recipe.delete()
         if request.user.is_authenticated:
-                return redirect('index', username=request.user.username)
+                return redirect('index')
     
     return render(request,'delete.html', {'obj' : 'recipe'})
 
