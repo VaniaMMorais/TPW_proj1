@@ -55,18 +55,20 @@ class Receita(models.Model):
         ordering = ['-updated', '-created']
 
     def save(self, *args, **kwargs):
+        if not self.imagem:  # Adicionando verificação para evitar chamadas desnecessárias
+            super().save(*args, **kwargs)
+            return
+
+        filename = f'{slugify(self.name)}.jpg'  
+
+        filepath = os.path.join(settings.MEDIA_ROOT, 'static/img', filename)
+        with open(filepath, 'wb') as file:
+            for chunk in self.imagem.chunks():
+                file.write(chunk)
+
+        self.imagem.name = os.path.join('static/img', filename)
         super().save(*args, **kwargs)
 
-        if self.imagem:
-            filename = f'{slugify(self.name)}.png'  # ou a extensão de imagem apropriada
-
-            filepath = os.path.join(settings.MEDIA_ROOT, 'img', filename)
-            with open(filepath, 'wb') as file:
-                for chunk in self.imagem.chunks():
-                    file.write(chunk)
-
-            self.url = os.path.join(settings.MEDIA_URL, 'img', filename)
-            super(Receita, self).save(*args, **kwargs)
 
 
     def __str__(self):
