@@ -1,5 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
+import os
+
+from django.conf import settings
+from django.conf.urls.static import static
 
 # Create your models here.
 
@@ -41,13 +46,28 @@ class Receita(models.Model):
     tempoCozinhar = models.IntegerField(null=True, blank=True)
     quantidadePessoas = models.IntegerField(null=True, blank=True)
     nivel = models.IntegerField(null=True, blank=True)
-    imagem = models.ImageField(upload_to='static/img/receitas-img',null=True, blank=True)  # 'upload_to' define o diretório de armazenamento
+    imagem = models.ImageField(upload_to='static/img',null=True, blank=True)  # 'upload_to' define o diretório de armazenamento
     ingredients = models.ManyToManyField(Ingrediente, through='ReceitaIngrediente')
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['-updated', '-created']
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if self.imagem:
+            filename = f'{slugify(self.name)}.png'  # ou a extensão de imagem apropriada
+
+            filepath = os.path.join(settings.MEDIA_ROOT, 'img', filename)
+            with open(filepath, 'wb') as file:
+                for chunk in self.imagem.chunks():
+                    file.write(chunk)
+
+            self.url = os.path.join(settings.MEDIA_URL, 'img', filename)
+            super(Receita, self).save(*args, **kwargs)
+
 
     def __str__(self):
         return self.name

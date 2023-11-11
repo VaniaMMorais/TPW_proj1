@@ -180,12 +180,11 @@ def create_category(request):
     return render(request, 'create_category.html')
 
 
-
 def createRecipe(request):
 
     form = ReceitaForm()
     if request.method == 'POST':
-        form = ReceitaForm(request.POST)
+        form = ReceitaForm(request.POST, request.FILES)
         if form.is_valid():
             receita = form.save(commit=False)
             receita.user = request.user  
