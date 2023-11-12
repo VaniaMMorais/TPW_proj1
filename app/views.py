@@ -223,7 +223,7 @@ def filtered_recipies(request, cat=None, nome=None):
     receitas = Receita.objects.all()
 
     if cat:
-        receitas = receitas.filter(category=cat)
+        receitas = receitas.filter(category=cat).annotate(media_avaliacoes=Avg('avaliacao__clasificacao'))
 
     if nome:
         receitas = receitas.filter(name__icontains=nome).annotate(media_avaliacoes=Avg('avaliacao__clasificacao'))
