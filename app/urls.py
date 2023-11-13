@@ -38,7 +38,8 @@ urlpatterns = [
     path('newrecipe/',  views.createRecipe, name = "createRecipe"),
     path('updaterecipe/<str:pk>',  views.updateReceita, name = "updateReceita"),
     path('deleterecipe/<str:pk>',  views.deleteRecipe, name = "deleteRecipe"),
-
+    path('add_to_favorites/<int:pk>/', views.add_to_favorites, name='add_to_favorites'),
+    path('remove_from_favorites/<int:pk>/', views.remove_from_favorites, name='remove_from_favorites'),
 
 ]
 

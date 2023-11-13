@@ -161,6 +161,41 @@ def favorites(request):
         return render(request, 'favorites.html', context)
     else:
         return redirect('login')
+    
+def add_to_favorites(request, pk):
+    if request.user.is_authenticated:
+        try:
+            receita = Receita.objects.get(pk=pk)
+            favorito, created = Favoritos.objects.get_or_create(user=request.user, receita=receita)
+
+            if not created:
+                message = "Recipe is already in your favorites."
+                success = False
+            else:
+                message = "Recipe added to favorites successfully."
+                success = True
+
+        except Receita.DoesNotExist:
+            message = "Recipe not found."
+            success = False
+    else:
+        message = "You must be logged in to add recipes to favorites."
+        success = False
+
+    return JsonResponse({'success': success, 'message': message})
+
+@login_required
+def remove_from_favorites(request, pk):
+    receita = get_object_or_404(Receita, pk=pk)
+    
+    favorito = Favoritos.objects.filter(user=request.user, receita=receita).first()
+
+    if favorito:
+        favorito.delete()
+    
+    return redirect('favorites')
+
+
 
 def myrecipes(request):
     

@@ -35,6 +35,9 @@
                                         {% endif %}
                                     {% endfor %}
                                 </div>
+                                <div class="remove-favorite-btn">
+                                    <a href="{% url 'remove_from_favorites' receita.receita.id %}"> X </a>
+                                </div>
                             </div>
                         </div>
                     </div>

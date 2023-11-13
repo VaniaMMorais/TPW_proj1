@@ -102,6 +102,7 @@
                         <a class="btn delicious-btn mt-30"  href="{% url 'updateReceita' receita.id %}">Update Recipe</a>
                         <!-- Link para abrir o modal -->
                         <a class="btn delicious-btn mt-30" data-toggle="modal" data-target="#deleteRecipeModal">Delete Recipe</a>
+                        <button id="add-to-favorites" class="btn delicious-btn mt-30">Add to Favorites</button>
 
                         <!-- Modal de confirmação de exclusão -->
                         <div class="modal fade" id="deleteRecipeModal" tabindex="-1" role="dialog" aria-labelledby="deleteRecipeModalLabel" aria-hidden="true">
@@ -186,6 +187,30 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var receitaId = '{{ receita.id }}';
+            var addToFavoritesButton = document.getElementById('add-to-favorites');
+    
+            if (addToFavoritesButton) {
+                addToFavoritesButton.addEventListener('click', function () {
+                    var url = '/add_to_favorites/' + receitaId + '/';
+    
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert(data.message);
+                            } else {
+                                alert(data.message);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            }
+        });
+    </script>
     
     
 
