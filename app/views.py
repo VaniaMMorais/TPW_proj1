@@ -71,6 +71,8 @@ def about(request):
     nsobremesa = Receita.objects.filter(category=9).count()
     return render(request, 'about.html', {"nreceitas": nreceitas, "nvegan": nvegan, "ncarne": ncarne, "nsobremesa": nsobremesa})
 
+def settings(request):
+    return render(request,'settings.html')
 
 def blogpost(request):
     return render(request,'blog-post.html')

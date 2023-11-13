@@ -19,6 +19,7 @@ urlpatterns = [
     path('filtered_recipies/<str:cat>/', views.filtered_recipies, name='filtered_recipies'),
     path('filtered_recipies/<str:nome>/', views.filtered_recipies, name='filtered_recipies'),
     path('filtered_recipies/<str:cat>/<str:nome>/', views.filtered_recipies, name='filtered_recipies'),
+    path('settings/', views.settings, name="settings"),
     path('adminPage/', views.adminPage, name="adminPage"),
 
     # views para a shoplist
