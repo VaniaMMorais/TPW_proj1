@@ -5,7 +5,7 @@ from django.utils import timezone
 import datetime
 
 from webproj import settings
-from .models import Avaliacao, Frigorifico, Ingrediente, Receita, Favoritos, ListaCompras
+from .models import Avaliacao, Frigorifico, Ingrediente, Receita, Favoritos, ListaCompras, ReceitaIngrediente
 from .models import Categoria
 from .forms import CategoryForm, FridgeForm, ComentarioForm, IngredienteForm, ReceitaForm, LoginForm, ShoplistForm
 
@@ -240,7 +240,7 @@ def create_category(request):
     return render(request, 'create_category.html')
 
 
-def createRecipe(request):
+""" def createRecipe(request):
 
     form = ReceitaForm()
     if request.method == 'POST':
@@ -253,7 +253,32 @@ def createRecipe(request):
                 return redirect('index')
 
     context = {'form': form}
-    return render(request,'newrecipe.html', context)
+    return render(request,'newrecipe.html', context) """
+
+def createRecipe(request):
+    form = ReceitaForm()
+    if request.method == 'POST':
+        form = ReceitaForm(request.POST, request.FILES)
+        if form.is_valid():
+            receita = form.save(commit=False)
+            receita.user = request.user
+            receita.save()
+            
+            # Limpe os ingredientes associados à receita
+            receita.ingredients.clear()
+
+            # Associe os ingredientes selecionados à receita
+            ingredientes_selecionados = request.POST.getlist('ingredients')
+            for ingrediente_id in ingredientes_selecionados:
+                ingrediente = Ingrediente.objects.get(pk=ingrediente_id)
+                ReceitaIngrediente.objects.create(receita=receita, ingrediente=ingrediente, quantidade=1.0)
+
+            if request.user.is_authenticated:
+                return redirect('index')
+
+    context = {'form': form}
+    return render(request, 'newrecipe.html', context)
+
 
 def updateReceita(request,pk):
     recipe = Receita.objects.get(id=pk)
