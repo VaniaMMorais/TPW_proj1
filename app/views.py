@@ -4,7 +4,7 @@ from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.utils import timezone
 
 from webproj import settings
-from .models import Avaliacao, Frigorifico, Ingrediente, Receita, Events
+from .models import Avaliacao, Frigorifico, Ingrediente, Receita, Favoritos
 from .models import Categoria
 from .forms import CategoryForm, FridgeForm, ComentarioForm, IngredienteForm, ReceitaForm, LoginForm
 
@@ -108,11 +108,23 @@ def fridge(request):
     return render(request, 'fridge.html', context)
 
 def favorites(request):
-    return render(request, 'favorites.html')
+    # Recupere as receitas favoritas do usuário atual
+    user = request.user
+    receitas_favoritas = Favoritos.objects.filter(user=user).select_related('receita')
 
+    return render(request, 'favorites.html', {'receitas_favoritas': receitas_favoritas})
 
 def myrecipes(request):
-    return render(request, 'myrecipes.html')
+    
+    if request.user.is_authenticated:
+        
+        user_recipes = Receita.objects.filter(user=request.user)
+        context = {'receitas': user_recipes}
+
+        return render(request, 'myrecipes.html', context)
+    else:
+        
+        return redirect('login')  # Certifique-se de ajustar 'login' para a URL real da sua página de login
 
 def delete_item(request, item_id):
     item = get_object_or_404(Frigorifico, id=item_id)
