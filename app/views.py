@@ -2,9 +2,10 @@ from django.contrib.auth import authenticate
 from django.shortcuts import render,redirect, get_object_or_404
 from django.http import HttpRequest, HttpResponse, JsonResponse 
 from django.utils import timezone
+import datetime
 
 from webproj import settings
-from .models import Avaliacao, Frigorifico, Ingrediente, Receita, Favoritos
+from .models import Avaliacao, Frigorifico, Ingrediente, Receita, Favoritos, ListaCompras
 from .models import Categoria
 from .forms import CategoryForm, FridgeForm, ComentarioForm, IngredienteForm, ReceitaForm, LoginForm
 
@@ -22,6 +23,8 @@ from django.contrib.auth import authenticate, login, logout
 from . tokens import generate_token
 from django.db.models import Avg
 
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 from app import models
 
@@ -107,8 +110,31 @@ def fridge(request):
     context = {'frigorifico_itens': frigorifico_itens, 'ingredients': ingredients, 'form': form}
     return render(request, 'fridge.html', context)
 
+
+def shoplist(request):
+
+    user = request.user
+    ingredientes_na_shoplist = ListaCompras.objects.filter(user=user, checklist=True).select_related('ingredient')
+
+    todos_ingredientes = Ingrediente.objects.all()
+
+    return render(request, 'shoplist.html', {'ingredientes_na_shoplist': ingredientes_na_shoplist, 'todos_ingredientes': todos_ingredientes})
+
+@login_required
+def add_ingredient_to_shoplist(request, ingrediente_id):
+
+    ingrediente = Ingrediente.objects.get(pk=ingrediente_id)
+
+    if ListaCompras.objects.filter(user=request.user, ingredient=ingrediente).exists():
+        return JsonResponse({'message': 'Este ingrediente já está na sua lista de compras.'})
+
+    ListaCompras.objects.create(user=request.user, ingredient=ingrediente, data=datetime.date.today(), checklist=False)
+
+    return JsonResponse({'message': 'Ingrediente adicionado à sua lista de compras com sucesso.'})
+
+
 def favorites(request):
-    # Recupere as receitas favoritas do usuário atual
+
     user = request.user
     receitas_favoritas = Favoritos.objects.filter(user=user).select_related('receita')
 
@@ -327,53 +353,3 @@ def signout(request):
     #messages.success(request, "Logged Out Successfully!!")
     return redirect('index')
 
-
-# Planner 
-def planner(request):  
-    all_events = Events.objects.all()
-    context = {
-        "events":all_events,
-    }
-    return render(request,'planner.html',context)
- 
-def all_events(request):                                                                                                 
-    all_events = Events.objects.all()                                                                                    
-    out = []                                                                                                             
-    for event in all_events:                                                                                             
-        out.append({                                                                                                     
-            'title': event.name,                                                                                         
-            'id': event.id,                                                                                              
-            'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),                                                         
-            'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),                                                             
-        })                                                                                                               
-                                                                                                                      
-    return JsonResponse(out, safe=False) 
- 
-def add_event(request):
-    start = request.GET.get("start", None)
-    end = request.GET.get("end", None)
-    title = request.GET.get("title", None)
-    event = Events(name=str(title), start=start, end=end)
-    event.save()
-    data = {}
-    return JsonResponse(data)
- 
-def update(request):
-    start = request.GET.get("start", None)
-    end = request.GET.get("end", None)
-    title = request.GET.get("title", None)
-    id = request.GET.get("id", None)
-    event = Events.objects.get(id=id)
-    event.start = start
-    event.end = end
-    event.name = title
-    event.save()
-    data = {}
-    return JsonResponse(data)
- 
-def remove(request):
-    id = request.GET.get("id", None)
-    event = Events.objects.get(id=id)
-    event.delete()
-    data = {}
-    return JsonResponse(data)

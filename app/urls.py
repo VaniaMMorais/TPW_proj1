@@ -21,6 +21,10 @@ urlpatterns = [
     path('filtered_recipies/<str:cat>/<str:nome>/', views.filtered_recipies, name='filtered_recipies'),
     path('adminPage/', views.adminPage, name="adminPage"),
 
+    # views para a shoplist
+    path('shoplist/', views.shoplist, name='shoplist'),
+    path('add_ingredient_to_shoplist/<int:ingrediente_id>/', views.add_ingredient_to_shoplist, name='add_ingredient_to_shoplist'),
+
 
     path('recipepost/<int:id>', views.recipepost, name='recipepost'),
     path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
@@ -30,18 +34,9 @@ urlpatterns = [
     path('delete_ingredient/<int:ing_id>/', views.delete_ingredient, name='delete_ingredient'),
     path('create_ingredient/', views.create_ingredient, name='create_ingredient'),
 
-
-
     path('newrecipe/',  views.createRecipe, name = "createRecipe"),
     path('updaterecipe/<str:pk>',  views.updateReceita, name = "updateReceita"),
     path('deleterecipe/<str:pk>',  views.deleteRecipe, name = "deleteRecipe"),
-
-    path('planner/', views.planner, name='planner'),
-    path('all_events/', views.all_events, name='all_events'), 
-    path('add_event/', views.add_event, name='add_event'), 
-    path('update/', views.update, name='update'),
-    path('remove/', views.remove, name='remove'),
-
 
 
 ]
