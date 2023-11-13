@@ -3,7 +3,7 @@ from django import forms
 
 from .models import Avaliacao, Categoria, Frigorifico, Ingrediente, Receita, ReceitaIngrediente,ListaCompras, Ingrediente
 
-class ReceitaForm(ModelForm):
+""" class ReceitaForm(ModelForm):
     class Meta:
         model = Receita
         fields = ('category','name','description','tempoPreparacao','tempoCozinhar','quantidadePessoas','nivel','imagem','ingredients')
@@ -37,6 +37,37 @@ def __init__(self, *args, **kwargs):
         super(ReceitaForm, self).__init__(*args, **kwargs)
         self.fields['ingredients'].widget = forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'})
         self.fields['ingredients'].queryset = ReceitaIngrediente.objects.all()  # ajuste com seu modelo de Ingrediente
+ """
+
+class ReceitaForm(ModelForm):
+    class Meta:
+        model = Receita
+        fields = ('category', 'name', 'description', 'tempoPreparacao', 'tempoCozinhar', 'quantidadePessoas', 'nivel', 'imagem', 'ingredients')
+
+        labels = {
+            'category': 'Categoria',
+            'name': 'Nome',
+            'description': 'Descrição',
+            'tempoPreparacao': 'Tempo de Preparação',
+            'tempoCozinhar': 'Tempo de Cozinhar',
+            'quantidadePessoas': 'Quantidade de Pessoas',
+            'nivel': 'Nível',
+            'imagem': 'Imagem',
+            'ingredients': 'Ingredientes',
+        }
+
+        widgets = {
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'tempoPreparacao': forms.NumberInput(attrs={'class': 'form-control'}),
+            'tempoCozinhar': forms.NumberInput(attrs={'class': 'form-control'}),
+            'quantidadePessoas': forms.NumberInput(attrs={'class': 'form-control'}),
+            'nivel': forms.NumberInput(attrs={'class': 'form-control'}),
+            'imagem': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'ingredients': forms.CheckboxSelectMultiple(),
+        }
+        exclude = ['user'] 
 
 class LoginForm(forms.Form):
     username = forms.CharField()
