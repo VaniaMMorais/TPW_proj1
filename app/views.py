@@ -7,9 +7,9 @@ import datetime
 from webproj import settings
 from .models import Avaliacao, Frigorifico, Ingrediente, Receita, Favoritos, ListaCompras
 from .models import Categoria
-from .forms import CategoryForm, FridgeForm, ComentarioForm, IngredienteForm, ReceitaForm, LoginForm
+from .forms import CategoryForm, FridgeForm, ComentarioForm, IngredienteForm, ReceitaForm, LoginForm, ShoplistForm
 
-
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
@@ -27,6 +27,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
 from app import models
+from django.contrib import messages
+from datetime import date
 
 # Create your views here.
 
@@ -120,31 +122,49 @@ def shoplist(request):
 
     return render(request, 'shoplist.html', {'ingredientes_na_shoplist': ingredientes_na_shoplist, 'todos_ingredientes': todos_ingredientes})
 
-@login_required
-def add_ingredient_to_shoplist(request, ingrediente_id):
+def add_ingredient_to_shoplist(request):
+    if request.method == 'POST':
+        form = ShoplistForm(request.POST)
+        if form.is_valid():
+            ingrediente_id = form.cleaned_data['ingredient'].id
 
-    ingrediente = Ingrediente.objects.get(pk=ingrediente_id)
+            # Verificar se o ingrediente já está na lista de compras
+            if ListaCompras.objects.filter(user=request.user, ingredient__id=ingrediente_id).exists():
+                messages.warning(request, 'This ingredient is already in your shopping list.')
+            else:
+                # Adicionar o ingrediente à lista de compras
+                ingrediente = Ingrediente.objects.get(pk=ingrediente_id)
+                ListaCompras.objects.create(user=request.user, ingredient=ingrediente, data=date.today(), checklist=False)
+                messages.success(request, f'{ingrediente.nome} added to your shopping list.')
 
-    if ListaCompras.objects.filter(user=request.user, ingredient=ingrediente).exists():
-        return JsonResponse({'message': 'Este ingrediente já está na sua lista de compras.'})
+                return redirect('shoplist')  # Redireciona de volta à página da lista de compras ou outra página apropriada
+    else:
+        form = ShoplistForm()  # Crie uma instância do formulário ShoplistForm
 
-    ListaCompras.objects.create(user=request.user, ingredient=ingrediente, data=datetime.date.today(), checklist=False)
+    ingredientes_na_shoplist = ListaCompras.objects.filter(user=request.user)
 
-    return JsonResponse({'message': 'Ingrediente adicionado à sua lista de compras com sucesso.'})
+    return render(request, 'shoplist.html', {'form': form, 'ingredientes_na_shoplist': ingredientes_na_shoplist})
 
+def delete_shoplist_item(request, item_id):
+    item = get_object_or_404(ListaCompras, id=item_id)
+    item.delete()
+    return redirect('shoplist')
 
 def favorites(request):
+    if request.user.is_authenticated:
+        user_favorites = Favoritos.objects.filter(user=request.user).select_related('receita')
+        favorite_recipes = user_favorites.annotate(media_avaliacoes=Avg('receita__avaliacao__clasificacao'))
 
-    user = request.user
-    receitas_favoritas = Favoritos.objects.filter(user=user).select_related('receita')
-
-    return render(request, 'favorites.html', {'receitas_favoritas': receitas_favoritas})
+        context = {'receitas': favorite_recipes}
+        return render(request, 'favorites.html', context)
+    else:
+        return redirect('login')
 
 def myrecipes(request):
     
     if request.user.is_authenticated:
         
-        user_recipes = Receita.objects.filter(user=request.user)
+        user_recipes = Receita.objects.filter(user=request.user).annotate(media_avaliacoes=Avg('avaliacao__clasificacao'))
         context = {'receitas': user_recipes}
 
         return render(request, 'myrecipes.html', context)

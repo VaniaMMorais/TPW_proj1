@@ -1,41 +1,50 @@
 {% extends 'main.html' %}
 
-{% load static %}
 {% block content %}
 
-    <!-- ##### Shop List Area Start ##### -->
-    <section class="shop-list-area section-padding-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-heading">
-                        <h3>Shopping List</h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <!-- Ingredientes na Shop List -->
-                {% for item in ingredientes_na_shoplist %}
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="single-best-receipe-area mb-30">
-                            <img class="receita-image" src="{{ item.ingredient.imagem.url }}" alt="{{ item.ingredient.nome }}"
-                                 style="max-width: 350px; max-height: 150px; width: 100%; height: auto;object-fit: cover;"/>
-                            <div class="receipe-content">
-                                <h5>{{ item.ingredient.nome }}</h5>
-                                <p>{{ item.ingredient.calorias }} calorias</p>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-
-                <!-- Botão para adicionar novo ingrediente à Shop List -->
-                <div class="col-12 text-center mt-4">
-                    <a href="{% url 'pagina_para_adicionar_ingredientes' %}" class="btn delicious-btn">Adicionar Novo Ingrediente</a>
-                </div>
+<div class="container">
+    <h1 class="mt-5">Shopping List</h1>
+    <div class="row mt-4">
+        <div class="col-lg-6">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Ingredient</th>
+                            <th>Calories</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in ingredientes_na_shoplist %}
+                            <tr>
+                                <td>{{ item.ingredient.nome }}</td>
+                                <td>{{ item.ingredient.calorias }} calorias</td>
+                                <td>
+                                    <a href="{% url 'delete_shoplist_item' item.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="3">Your shopping list is empty.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
-    </section>
-    <!-- ##### Shop List Area End ##### -->
+        <div class="col-lg-6">
+            <form method="post" action="{% url 'add_ingredient_to_shoplist' %}">
+                <select name="ingredient">
+                    {% for ing in ingredients %}
+                        <option value="{{ ing.id }}">{{ ing.nome }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn delicious-btn mt-30">Add Ingredient</button>
+                {% csrf_token %}
+            </form>
+        </div>        
+    </div>
+</div>
 
 {% endblock content %}

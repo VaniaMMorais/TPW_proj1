@@ -23,7 +23,8 @@ urlpatterns = [
 
     # views para a shoplist
     path('shoplist/', views.shoplist, name='shoplist'),
-    path('add_ingredient_to_shoplist/<int:ingrediente_id>/', views.add_ingredient_to_shoplist, name='add_ingredient_to_shoplist'),
+    path('add_ingredient_to_shoplist/', views.add_ingredient_to_shoplist, name='add_ingredient_to_shoplist'),
+    path('delete_shoplist_item/<int:item_id>/', views.delete_shoplist_item, name='delete_shoplist_item'),
 
 
     path('recipepost/<int:id>', views.recipepost, name='recipepost'),

@@ -15,22 +15,20 @@
             </div>
 
             <div class="row">
-                {% for favorito in receitas_favoritas %}
+                {% for receita in receitas %}
                     <div class="col-12 col-sm-6 col-lg-4">
                         <div class="single-best-receipe-area mb-30">
-                            {% if favorito.receita.imagem %}
-                                <img class="receita-image" src="{{ favorito.receita.imagem.url }}" alt="{{ favorito.receita.name }}"
-                                     style="max-width: 350px; max-height: 150px; width: 100%; height: auto;object-fit: cover;"/>
+                            {% if receita.receita.imagem %}
+                                <img class="receita-image" src="{{ receita.receita.imagem.url }}" alt="{{ receita.receita.name }}"
+                                    style="max-width: 350px; max-height: 150px; width: 100%; height: auto; object-fit: cover;"/>
                             {% endif %}
                             <div class="receipe-content">
-                                <a href="{% url 'recipepost' favorito.receita.id %}">
-                                    <h5>{{ favorito.receita.name }}</h5>
+                                <a href="{% url 'recipepost' receita.receita.id %}">
+                                    <h5>{{ receita.receita.name }}</h5>
                                 </a>
                                 <div class="ratings">
-                                    <!-- Lógica de avaliações aqui -->
-                                    <!-- Por exemplo, estou usando "xxxxx" como marcador -->
                                     {% for i in "xxxxx" %}
-                                        {% if forloop.counter <= favorito.receita.media_avaliacoes %}
+                                        {% if forloop.counter <= receita.media_avaliacoes %}
                                             <i class="fa fa-star" aria-hidden="true"></i>
                                         {% else %}
                                             <i class="fa fa-star-o" aria-hidden="true"></i>

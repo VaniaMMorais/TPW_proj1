@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 
-from .models import Avaliacao, Categoria, Frigorifico, Ingrediente, Receita, ReceitaIngrediente
+from .models import Avaliacao, Categoria, Frigorifico, Ingrediente, Receita, ReceitaIngrediente,ListaCompras, Ingrediente
 
 class ReceitaForm(ModelForm):
     class Meta:
@@ -78,5 +78,16 @@ class IngredienteForm(forms.ModelForm):
     class Meta:
         model = Ingrediente
         fields = ['nome', 'categoria', 'icon', 'calorias']
+
+class ShoplistForm(forms.ModelForm):
+    ingredient = forms.ModelChoiceField(
+        queryset=Ingrediente.objects.all(),
+        label='Choose an ingredient',
+        empty_label=None  # Impede um valor vazio no dropdown
+    )
+
+    class Meta:
+        model = ListaCompras
+        fields = ['ingredient']
 
 
