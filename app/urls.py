@@ -19,6 +19,7 @@ urlpatterns = [
     path('filtered_recipies/<str:cat>/', views.filtered_recipies, name='filtered_recipies'),
     path('filtered_recipies/<str:nome>/', views.filtered_recipies, name='filtered_recipies'),
     path('filtered_recipies/<str:cat>/<str:nome>/', views.filtered_recipies, name='filtered_recipies'),
+    path('settings/', views.settings, name="settings"),
     path('adminPage/', views.adminPage, name="adminPage"),
 
     # views para a shoplist
@@ -38,7 +39,8 @@ urlpatterns = [
     path('newrecipe/',  views.createRecipe, name = "createRecipe"),
     path('updaterecipe/<str:pk>',  views.updateReceita, name = "updateReceita"),
     path('deleterecipe/<str:pk>',  views.deleteRecipe, name = "deleteRecipe"),
-
+    path('add_to_favorites/<int:pk>/', views.add_to_favorites, name='add_to_favorites'),
+    path('remove_from_favorites/<int:pk>/', views.remove_from_favorites, name='remove_from_favorites'),
 
 ]
 

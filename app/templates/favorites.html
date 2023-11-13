@@ -10,6 +10,7 @@
                 <div class="col-12">
                     <div class="section-heading">
                         <h3>My Favorite Recipes</h3>
+                        <hr>
                     </div>
                 </div>
             </div>
@@ -34,6 +35,9 @@
                                             <i class="fa fa-star-o" aria-hidden="true"></i>
                                         {% endif %}
                                     {% endfor %}
+                                </div>
+                                <div class="remove-favorite-btn">
+                                    <a href="{% url 'remove_from_favorites' receita.receita.id %}"> X </a>
                                 </div>
                             </div>
                         </div>
