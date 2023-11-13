@@ -116,8 +116,8 @@ def fridge(request):
 def shoplist(request):
 
     user = request.user
-    ingredientes_na_shoplist = ListaCompras.objects.filter(user=user, checklist=True).select_related('ingredient')
-
+    #ingredientes_na_shoplist = ListaCompras.objects.filter(user=user, checklist=True).select_related('ingredient')
+    ingredientes_na_shoplist = ListaCompras.objects.filter(user=user)
     todos_ingredientes = Ingrediente.objects.all()
 
     return render(request, 'shoplist.html', {'ingredientes_na_shoplist': ingredientes_na_shoplist, 'todos_ingredientes': todos_ingredientes})
@@ -131,6 +131,7 @@ def add_ingredient_to_shoplist(request):
             # Verificar se o ingrediente já está na lista de compras
             if ListaCompras.objects.filter(user=request.user, ingredient__id=ingrediente_id).exists():
                 messages.warning(request, 'This ingredient is already in your shopping list.')
+                return redirect('shoplist')
             else:
                 # Adicionar o ingrediente à lista de compras
                 ingrediente = Ingrediente.objects.get(pk=ingrediente_id)
@@ -142,6 +143,7 @@ def add_ingredient_to_shoplist(request):
         form = ShoplistForm()  # Crie uma instância do formulário ShoplistForm
 
     ingredientes_na_shoplist = ListaCompras.objects.filter(user=request.user)
+    print("Passei aqui!!!!")
 
     return render(request, 'shoplist.html', {'form': form, 'ingredientes_na_shoplist': ingredientes_na_shoplist})
 
