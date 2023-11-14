@@ -4,6 +4,7 @@
 
 {% block content %}
 
+    <section class="best-receipe-area" style="padding-top:50px"  id="best-receipe-section">
     <div class="container">
     <div class="row">
 		<div class="col-12">
@@ -25,20 +26,20 @@
 									<label class="form-label">Username</label>
 									<input type="text" class="form-control" placeholder="" aria-label="Username" value="{{ user.username }}" readonly>
 								</div>
-								<!-- First Name -->
+								<!-- Email -->
 								<div class="col-md-6">
+									<label for="inputEmail4" class="form-label">Email</label>
+									<input type="email" class="form-control" id="inputEmail4" value="{{ user.email }}" readonly>
+								</div>
+								<!-- First Name -->
+								<div class="col-md-6" style="margin-top: 20px">
 									<label class="form-label">First Name</label>
 									<input type="text" class="form-control" placeholder="" aria-label="First name" value="{{ user.first_name }}" readonly>
 								</div>
 								<!-- Last name -->
-								<div class="col-md-6">
+								<div class="col-md-6" style="margin-top: 20px">
 									<label class="form-label">Last Name</label>
 									<input type="text" class="form-control" placeholder="" aria-label="Last name" value="{{ user.last_name }}" readonly>
-								</div>
-								<!-- Email -->
-								<div class="col-md-12" style="margin-top: 20px">
-									<label for="inputEmail4" class="form-label">Email</label>
-									<input type="email" class="form-control" id="inputEmail4" value="{{ user.email }}" readonly>
 								</div>
 							</div> <!-- Row END -->
 						</div>
@@ -66,20 +67,20 @@
 					</div>
 					<!-- Upload profile -->
 					<div class="col-4">
-						<div class="bg-secondary-soft px-4 py-5 rounded" style="padding-left: 50px">
-                            <h3 class="mb-4 mt-0">Upload profile photo</h3>
+						<div class="bg-secondary-soft py-5 rounded" style="padding-left: 60px;">
+                            <h3 class="mb-4 mt-0">Profile Photo</h3>
 							<div class="row g-3">
 								<div class="text-center">
 									<!-- Image upload -->
 									<div class="square position-relative display-2 mb-3">
-										<i class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i>
+                                        <img src="{% static 'img/avatar.png' %}" alt="Team Member 2">
 									</div>
 									<!-- Button -->
 									<!-- <input type="file" id="customFile" name="file" hidden="">
 									<label class="btn btn-success-soft btn-block" for="customFile">Upload</label>
 									<button type="button" class="btn btn-danger-soft">Remove</button> -->
 									<!-- Content -->
-									<p class="text-muted mt-3 mb-0"><span class="me-1">Note:</span> Minimum size 300px x 300px</p>
+									<!--<p class="text-muted mt-3 mb-0"><span class="me-1">Note:</span> Minimum size 300px x 300px</p>-->
 								</div>
 							</div>
 						</div>
@@ -97,6 +98,7 @@
 		</div>
 	</div>
 	</div>
+    </section>
 
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {

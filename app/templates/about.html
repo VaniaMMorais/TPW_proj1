@@ -2,81 +2,96 @@
 
 {% load static %}
 {% block content %}
-    
-    <!-- ##### Breadcumb Area Start ##### -->
-    <div class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'img/bg-img/breadcumb1.jpg' %});">
-        <div class="container h-100">
-            <div class="row h-100 align-items-center">
-                <div class="col-12">
-                    <div class="breadcumb-text text-center">
-                        <h2>About us</h2>
+
+    <!-- ##### About Us Area Start ##### -->
+    <section class="about-us-area">
+        <div class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'img/bg-img/breadcumb1.jpg' %});">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12">
+                        <div class="breadcumb-text text-center">
+                            <h2>About us</h2>
+                            <p>This project was developed within the scope of the TPW course for Professor Hélder Zagalo</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- ##### Breadcumb Area End ##### -->
-
-    <!-- ##### About Area Start ##### -->
-    <section class="about-area section-padding-80">
-        <div class="container">
+        <div class="container" style="margin-top: 50px">
             <div class="row">
+
+                <!-- Team Members -->
                 <div class="col-12">
-                    <div class="section-heading">
-                        <h3>Who we are and what we do?</h3>
+                    <div class="single-about-content mb-100">
+                        <h3>Team Members</h3>
+                        <hr>
+                        <div class="row">
+                            <!-- Member 1 -->
+                            <div class="col-md-4">
+                                <div class="single-member" style="width: 75%; text-align: center">
+                                    <img src="{% static 'img/about/mariana.png' %}" alt="Team Member 1">
+                                    <h5 class="about-names">Mariana Perna</h5>
+                                    <p>106087</p>
+                                </div>
+                            </div>
+                            <!-- Member 2 -->
+                            <div class="col-md-4">
+                                <div class="single-member" style="width: 75%; text-align: center">
+                                    <img src="{% static 'img/about/rafaela.png' %}" alt="Team Member 2">
+                                    <h5 class="about-names">Rafaela Dias</h5>
+                                    <p>108782</p>
+                                </div>
+                            </div>
+                            <!-- Member 3 -->
+                            <div class="col-md-4">
+                                <div class="single-member" style="width: 75%; text-align: center">
+                                    <img src="{% static 'img/about/vania.png' %}" alt="Team Member 3">
+                                    <h5 class="about-names">Vânia Morais</h5>
+                                    <p>102383</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
+                <!-- Project Description -->
                 <div class="col-12">
-                    <h6 class="sub-heading pb-5">First project for Technologies and Web Programming. Developed with Django.</h6>
-                </div>
-            </div>
-
-            <div class="row align-items-center mt-70">
-                <!-- Single Cool Fact -->
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="single-cool-fact">
-                        <img src="{% static 'img/core-img/hamburger.png' %}" alt="">
-                        <h3><span class="counter">{{nreceitas}}</span></h3>
-                        <h6>Amazing receipies</h6>
+                    <div class="single-about-content mb-100">
+                        <h3>Project Overview</h3>
+                        <hr>
+                        <p>Our website is a platform that allows users to explore, share, and discover a wide variety of delicious recipes. From main dishes to incredible desserts, our goal is to inspire culinary creativity and make cooking an enjoyable experience.</p>
                     </div>
                 </div>
 
-                <!-- Single Cool Fact -->
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="single-cool-fact">
-                        <img src="{% static 'img/core-img/salad.png' %}" alt="">
-                        <h3><span class="counter">{{nvegan}}</span></h3>
-                        <h6>Vegan recipies</h6>
-                    </div>
-                </div>
-
-                <!-- Single Cool Fact -->
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="single-cool-fact">
-                        <img src="{% static 'img/core-img/rib.png' %}" alt="">
-                        <h3><span class="counter">{{ncarne}}</span></h3>
-                        <h6>Meat recipies</h6>
-                    </div>
-                </div>
-
-                <!-- Single Cool Fact -->
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="single-cool-fact">
-                        <img src="{% static 'img/core-img/pancake.png' %}" alt="">
-                        <h3><span class="counter">{{nsobremesa}}</span></h3>
-                        <h6>Desert recipies</h6>
+                <!-- Contact Information -->
+                <div class="col-12">
+                    <div class="contact-information mb-100">
+                        <h3>Contact Us</h3>
+                        <hr>
+                        <p>Feel free to reach out to us for any inquiries or feedback.</p>
+                        <div id="map" style="height: 500px;"></div>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
-    <!-- ##### About Area End ##### -->
+    <!-- ##### About Us Area End ##### -->
 
-    
-    
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Coordenadas da Universidade de Aveiro
+        var universityLatLng = [40.63328706005596, -8.659450387263156];
+
+        // Configuração do mapa
+        var map = L.map('map').setView(universityLatLng, 17);
+
+        // Adiciona um marcador
+        L.marker(universityLatLng).addTo(map)
+            .bindPopup('Universidade de Aveiro');
+
+        // Adiciona um tile do OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+    </script>
 
 {% endblock content %}
