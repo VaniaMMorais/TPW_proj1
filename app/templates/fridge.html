@@ -26,13 +26,13 @@
         </div>
         <div class="col-lg-6">
             <form method="post" action="{% url 'add_ingredient_to_fridge' %}">
-                <select name="ingredient">  <!-- Adicione o atributo name -->
+                <select name="ingredient"> 
                     {% for ing in ingredients %}
                     <option value="{{ ing.id }}">{{ ing.nome }}</option>
                     {% endfor %}
                 </select>
                 <button type="submit" class="btn delicious-btn mt-30">Adicionar Ingrediente</button>
-                {% csrf_token %}  <!-- Adicione o token CSRF para fins de segurança -->
+                {% csrf_token %}  
             </form>
         </div>        
         

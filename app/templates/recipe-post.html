@@ -96,41 +96,43 @@
                     </div>
                 </div>
 
-                <div style="display: flex ;align-content: center; padding-top: 30px; padding-bottom: 30px">
+                {% if user.is_authenticated %}
+                <div style="padding-top: 30px; padding-bottom: 30px">
+                    <button id="add-to-favorites" class="btn delicious-btn mt-30">Add to Favorites</button>
                     {% if user.is_authenticated and user == receita.user or  user.is_superuser %}
-                        <h3 style="padding-right: 300px">Is there something missing?</h3>
-                        <button id="add-to-favorites" class="btn delicious-btn mt-30">Add to Favorites</button>
-                        <a class="btn delicious-btn mt-30"  href="{% url 'updateReceita' receita.id %}">Update Recipe</a>
-                        <!-- Link para abrir o modal -->
-                        <a class="btn delicious-btn mt-30" data-toggle="modal" data-target="#deleteRecipeModal">Delete Recipe</a>
+                    <a class="btn delicious-btn mt-30"  href="{% url 'updateReceita' receita.id %}">Update Recipe</a>
+                    <!-- Link para abrir o modal -->
+                    <a class="btn delicious-btn mt-30" data-toggle="modal" data-target="#deleteRecipeModal">Delete Recipe</a>
 
-                        <!-- Modal de confirmação de exclusão -->
-                        <div class="modal fade" id="deleteRecipeModal" tabindex="-1" role="dialog" aria-labelledby="deleteRecipeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteRecipeModalLabel">Confirm Deletion</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Are you sure you want to delete "{{receita.name}}"?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
-                                        <form method="POST" action="{% url 'deleteRecipe' pk=receita.id %}">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="recipe_id" value="{{ receita.id }}">
-                                            <input type="submit" class="btn btn-danger" value="Confirm">
-                                        </form>
-                                    </div>
+                    <!-- Modal de confirmação de exclusão -->
+                    <div class="modal fade" id="deleteRecipeModal" tabindex="-1" role="dialog" aria-labelledby="deleteRecipeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteRecipeModalLabel">Confirm Deletion</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to delete "{{receita.name}}"?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
+                                    <form method="POST" action="{% url 'deleteRecipe' pk=receita.id %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="recipe_id" value="{{ receita.id }}">
+                                        <input type="submit" class="btn btn-danger" value="Confirm">
+                                    </form>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
                     {% endif %}
                 </div>
+
+                {% endif %}
 
                 <div class="comments-box" style="padding-top:50px; padding-bottom:50px;">
                     <h3>Comments</h3>
