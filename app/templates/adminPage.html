@@ -4,115 +4,112 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="mt-5">Categorias</h1>
     <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <ul class="list-group">
-                {% for cat in categorias %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <a href="#">{{ cat.name }}</a>
-                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDelete{{cat.id}}">Delete</button>
-                </li>
-                <!-- Modal de confirmação de exclusão -->
-                <div class="modal fade" id="confirmDelete{{cat.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteRecipeModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="deleteRecipeModalLabel">Confirm Deletion</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Are you sure you want to delete "{{cat.name}}"?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
-                                <form method="POST" action="{% url 'delete_category' cat.id %}">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="recipe_id" value="{{ cat.id }}">
-                                    <input type="submit" class="btn btn-danger" value="Confirm">
-                                </form>
+        <div class="col-6">
+            <h3 class="mt-5">Categories</h3>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <ul class="list-group">
+                        {% for cat in categorias %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="#">{{ cat.name }}</a>
+                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDelete{{cat.id}}">Delete</button>
+                        </li>
+                        <!-- Modal de confirmação de exclusão -->
+                        <div class="modal fade" id="confirmDelete{{cat.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteRecipeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteRecipeModalLabel">Confirm Deletion</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete "{{cat.name}}"?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
+                                        <form method="POST" action="{% url 'delete_category' cat.id %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="recipe_id" value="{{ cat.id }}">
+                                            <input type="submit" class="btn btn-danger" value="Confirm">
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        {% empty %}
+                        <li class="list-group-item">Nenhuma categoria disponível.</li>
+                        {% endfor %}
+                    </ul>
                 </div>
-                {% empty %}
-                <li class="list-group-item">Nenhuma categoria disponível.</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-</div>
-<div class="container">
-    <h1 class="mt-5">Create Category</h1>
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <form method="post" action="{% url 'create_category' %}">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="categoryName">Nome da Categoria:</label>
-                    <input type="text" id="categoryName" name="categoryName" class="form-control" required>
+            </div>
+            <div class="row" style="margin-top: 20px">
+                <div class="col-12">
+                    <form method="post" action="{% url 'create_category' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" id="categoryName" name="categoryName" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Add Category</button>
+                    </form>
                 </div>
-                <button type="submit" class="btn btn-success">Criar Categoria</button>
-            </form>
+            </div>
         </div>
-    </div>
-</div>
 
-
-<div class="container">
-    <h1 class="mt-5">Ingredients</h1>
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <ul class="list-group">
-                {% for ing in ingredientes %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <a href="#">{{ ing.nome }}</a>
-                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{{ing.id}}">Delete</button>
-                </li>
-                <div class="modal fade" id="delete{{ing.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteIngredientModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="deleteIngredientModalLabel">Confirm Deletion</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Are you sure you want to delete "{{ing.nome}}"?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
-                                <form method="POST" action="{% url 'delete_ingredient' ing.id %}">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="ing_id" value="{{ ing.id }}">
-                                    <button type="submit" class="btn btn-danger">Confirm</button>
-                                </form>
+        <div class="col-6">
+            <h3 class="mt-5">Ingredients</h3>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <ul class="list-group">
+                        {% for ing in ingredientes %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="#">{{ ing.nome }}</a>
+                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{{ing.id}}">Delete</button>
+                        </li>
+                        <div class="modal fade" id="delete{{ing.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteIngredientModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteIngredientModalLabel">Confirm Deletion</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete "{{ing.nome}}"?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
+                                        <form method="POST" action="{% url 'delete_ingredient' ing.id %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="ing_id" value="{{ ing.id }}">
+                                            <button type="submit" class="btn btn-danger">Confirm</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        {% empty %}
+                        <li class="list-group-item">Nenhum ingrediente disponível.</li>
+                        {% endfor %}
+                    </ul>
                 </div>
-                {% empty %}
-                <li class="list-group-item">Nenhum ingrediente disponível.</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-</div>
-<div class="container">
-    <h1 class="mt-5">Adicionar Ingrediente</h1>
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <form method="post" action="{% url 'create_ingredient' %}">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="ingredientName">Nome da Categoria:</label>
-                    <input type="text" id="ingredientName" name="ingredientName" class="form-control" required>
+            </div>
+            <div class="row" style="margin-top: 20px">
+                <div class="col-12">
+                    <form method="post" action="{% url 'create_ingredient' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" id="ingredientName" name="ingredientName" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">Add Ingredient</button>
+                    </form>
                 </div>
-                <button type="submit" class="btn btn-success">Criar Ingrediente</button>
-            </form>
+            </div>
         </div>
     </div>
 </div>

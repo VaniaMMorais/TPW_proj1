@@ -22,6 +22,7 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth import authenticate, login, logout
 from . tokens import generate_token
 from django.db.models import Avg
+from django.db.models import Count
 
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -52,11 +53,13 @@ def index(request, username=None):
     else: user = request.user
     # user = User.objects.get(username=username)
     receitas = Receita.objects.all().annotate(media_avaliacoes=Avg('avaliacao__clasificacao'))
+    contagem_categorias = Receita.objects.values('category__name').annotate(contagem=Count('category__name')).order_by('category__name')
 
     nreceitas = Receita.objects.all().count()
-    nvegan = Receita.objects.filter(category=13).count()
-    ncarne = Receita.objects.filter(category=6).count()
-    nsobremesa = Receita.objects.filter(category=9).count()
+    nvegan = contagem_categorias.filter(category__name='Vegan').first()['contagem']
+    ncarne = contagem_categorias.filter(category__name='Meat').first()['contagem']
+    nsobremesa = contagem_categorias.filter(category__name='Dessert').first()['contagem']
+
     return render(request, 'index.html', {'receitas': receitas, "nreceitas": nreceitas, "nvegan": nvegan, "ncarne": ncarne, "nsobremesa": nsobremesa})
 
 def adminPage(request):

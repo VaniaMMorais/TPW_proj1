@@ -99,10 +99,10 @@
                 <div style="display: flex ;align-content: center; padding-top: 30px; padding-bottom: 30px">
                     {% if user.is_authenticated and user == receita.user or  user.is_superuser %}
                         <h3 style="padding-right: 300px">Is there something missing?</h3>
+                        <button id="add-to-favorites" class="btn delicious-btn mt-30">Add to Favorites</button>
                         <a class="btn delicious-btn mt-30"  href="{% url 'updateReceita' receita.id %}">Update Recipe</a>
                         <!-- Link para abrir o modal -->
                         <a class="btn delicious-btn mt-30" data-toggle="modal" data-target="#deleteRecipeModal">Delete Recipe</a>
-                        <button id="add-to-favorites" class="btn delicious-btn mt-30">Add to Favorites</button>
 
                         <!-- Modal de confirmação de exclusão -->
                         <div class="modal fade" id="deleteRecipeModal" tabindex="-1" role="dialog" aria-labelledby="deleteRecipeModalLabel" aria-hidden="true">

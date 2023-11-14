@@ -3,8 +3,15 @@
 {% block content %}
 
 <div class="container">
-    <h1 class="mt-5">My Fridge</h1>
-    <div class="row mt-4">
+    <div class="row" style="padding-top: 50px">
+        <div class="col-12">
+            <div class="section-heading">
+                <h3>My Fridge</h3>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-lg-6">
             <ul class="list-group">
                 {% for item in frigorifico_itens %}
