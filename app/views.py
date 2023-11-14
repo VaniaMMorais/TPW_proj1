@@ -5,8 +5,7 @@ from django.utils import timezone
 import datetime
 
 from webproj import settings
-from .models import Avaliacao, Frigorifico, Ingrediente, Receita, Favoritos, ListaCompras, ReceitaIngrediente
-from .models import Categoria
+from .models import Avaliacao, Frigorifico, Ingrediente, Receita, Favoritos, ListaCompras, ReceitaIngrediente, Categoria
 from .forms import CategoryForm, FridgeForm, ComentarioForm, IngredienteForm, ReceitaForm, LoginForm, ShoplistForm,UserProfileForm
 
 from django.shortcuts import get_object_or_404
@@ -36,13 +35,6 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserProfileForm
 
 # Create your views here.
-
-""" receitas = [
-    {'id':1, 'name' : 'bacalhau à brás'},
-    {'id':2, 'name' : 'carbonara'},
-    {'id':3, 'name' : 'carne de porco à alentejana'},
-
-] """
 
 def hello(request):
     return HttpResponse("Hello World!")
@@ -283,21 +275,6 @@ def create_category(request):
 
     return render(request, 'create_category.html')
 
-
-""" def createRecipe(request):
-
-    form = ReceitaForm()
-    if request.method == 'POST':
-        form = ReceitaForm(request.POST, request.FILES)
-        if form.is_valid():
-            receita = form.save(commit=False)
-            receita.user = request.user  
-            receita.save()
-            if request.user.is_authenticated:
-                return redirect('index')
-
-    context = {'form': form}
-    return render(request,'newrecipe.html', context) """
 
 def createRecipe(request):
     form = ReceitaForm()
