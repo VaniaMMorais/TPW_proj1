@@ -3,6 +3,9 @@ from django import forms
 
 from .models import Avaliacao, Categoria, Frigorifico, Ingrediente, Receita, ReceitaIngrediente,ListaCompras, Ingrediente
 
+from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.models import User
+
 """ class ReceitaForm(ModelForm):
     class Meta:
         model = Receita
@@ -120,5 +123,13 @@ class ShoplistForm(forms.ModelForm):
     class Meta:
         model = ListaCompras
         fields = ['ingredient']
+
+class UserProfileForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'password')
+
+    password = forms.CharField(widget=forms.HiddenInput(), required=False)
+
 
 

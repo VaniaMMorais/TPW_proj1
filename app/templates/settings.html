@@ -20,44 +20,49 @@
 						<div class="bg-secondary-soft px-4 py-5 rounded">
                             <h3 class="mb-4 mt-0">Contact Detail</h3>
 							<div class="row g-3">
+								<!-- Username -->
+								<div class="col-md-6">
+									<label class="form-label">Username</label>
+									<input type="text" class="form-control" placeholder="" aria-label="Username" value="{{ user.username }}" readonly>
+								</div>
 								<!-- First Name -->
 								<div class="col-md-6">
 									<label class="form-label">First Name</label>
-									<input type="text" class="form-control" placeholder="" aria-label="First name" value="Scaralet">
+									<input type="text" class="form-control" placeholder="" aria-label="First name" value="{{ user.first_name }}" readonly>
 								</div>
 								<!-- Last name -->
 								<div class="col-md-6">
 									<label class="form-label">Last Name</label>
-									<input type="text" class="form-control" placeholder="" aria-label="Last name" value="Doe">
+									<input type="text" class="form-control" placeholder="" aria-label="Last name" value="{{ user.last_name }}" readonly>
 								</div>
 								<!-- Email -->
 								<div class="col-md-12" style="margin-top: 20px">
 									<label for="inputEmail4" class="form-label">Email</label>
-									<input type="email" class="form-control" id="inputEmail4" value="example@homerealty.com">
+									<input type="email" class="form-control" id="inputEmail4" value="{{ user.email }}" readonly>
 								</div>
 							</div> <!-- Row END -->
 						</div>
                         <br>
-						<div class="bg-secondary-soft px-4 py-5 rounded">
+						<!-- <div class="bg-secondary-soft px-4 py-5 rounded">
                             <h3 class="my-4">Change Password</h3>
-							<div class="row g-3">
+							<div class="row g-3"> -->
 								<!-- Old password -->
-								<div class="col-md-6">
+								<!-- <div class="col-md-6">
 									<label for="exampleInputPassword1" class="form-label">Old Password</label>
 									<input type="password" class="form-control" id="exampleInputPassword1">
-								</div>
+								</div> -->
 								<!-- New password -->
-								<div class="col-md-6">
+								<!-- <div class="col-md-6">
 									<label for="exampleInputPassword2" class="form-label">New Password</label>
 									<input type="password" class="form-control" id="exampleInputPassword2">
-								</div>
+								</div> -->
 								<!-- Confirm password -->
-								<div class="col-md-12" style="margin-top: 20px">
+								<!-- <div class="col-md-12" style="margin-top: 20px">
 									<label for="exampleInputPassword3" class="form-label">Confirm Password</label>
 									<input type="password" class="form-control" id="exampleInputPassword3">
-								</div>
-							</div>
-						</div>
+								</div> -->
+						<!-- 	</div>
+						</div> -->
 					</div>
 					<!-- Upload profile -->
 					<div class="col-4">
@@ -70,9 +75,9 @@
 										<i class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i>
 									</div>
 									<!-- Button -->
-									<input type="file" id="customFile" name="file" hidden="">
+									<!-- <input type="file" id="customFile" name="file" hidden="">
 									<label class="btn btn-success-soft btn-block" for="customFile">Upload</label>
-									<button type="button" class="btn btn-danger-soft">Remove</button>
+									<button type="button" class="btn btn-danger-soft">Remove</button> -->
 									<!-- Content -->
 									<p class="text-muted mt-3 mb-0"><span class="me-1">Note:</span> Minimum size 300px x 300px</p>
 								</div>
@@ -80,14 +85,81 @@
 						</div>
                         <br>
                         <!-- button -->
-                        <div class="gap-3 d-md-flex justify-content-md-end text-center">
-                            <button type="button" class="btn btn-danger btn">Delete profile</button>
-                            <button type="button" class="btn btn-primary btn">Update profile</button>
-                        </div>
+                        <!-- <div class="gap-3 d-md-flex justify-content-md-end text-center">
+                            <div class="gap-3 d-md-flex justify-content-md-end text-center">
+								<button id="deleteButton" class="btn btn-danger btn">Delete profile</button>
+								<button id="updateButton" class="btn btn-primary btn">Update profile</button>
+							</div>
+                        </div> -->
 					</div>
 				</div> <!-- Row END -->
 			</form> <!-- Form END -->
 		</div>
 	</div>
 	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+		document.getElementById('updateButton').addEventListener('click', updateProfile);
+		document.getElementById('deleteButton').addEventListener('click', deleteProfile);
+	});
+
+	function updateProfile() {
+		console.log('Update button clicked');
+		const username = document.querySelector('[aria-label="Username"]').value;
+		const firstName = document.querySelector('[aria-label="First name"]').value;
+		const lastName = document.querySelector('[aria-label="Last name"]').value;
+		const email = document.querySelector('[aria-label="Email"]').value;
+
+		const csrfToken = getCookie('csrftoken');
+
+		fetch('user_settings', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRFToken': csrfToken,
+			},
+			body: JSON.stringify({
+				username: username,
+				first_name: firstName,
+				last_name: lastName,
+				email: email,
+			}),
+		})
+			.then(response => response.json())
+			.then(data => {
+				console.log(data);
+				if (data.success) {
+					alert(data.message);
+				} else {
+					alert(data.message);
+				}
+			})
+			.catch(error => {
+				console.error('Error:', error);
+			});
+	}
+
+	function deleteProfile() {
+		console.log('Delete button clicked');
+		// Adicione lógica para excluir o perfil aqui
+	}
+
+	function getCookie(name) {
+		var cookieValue = null;
+		if (document.cookie && document.cookie !== '') {
+			var cookies = document.cookie.split(';');
+			for (var i = 0; i < cookies.length; i++) {
+				var cookie = cookies[i].trim();
+				if (cookie.substring(0, name.length + 1) === (name + '=')) {
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+					break;
+				}
+			}
+		}
+		return cookieValue;
+	}
+
+		</script>	
+	
 {% endblock content %}

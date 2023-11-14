@@ -7,7 +7,7 @@ import datetime
 from webproj import settings
 from .models import Avaliacao, Frigorifico, Ingrediente, Receita, Favoritos, ListaCompras, ReceitaIngrediente
 from .models import Categoria
-from .forms import CategoryForm, FridgeForm, ComentarioForm, IngredienteForm, ReceitaForm, LoginForm, ShoplistForm
+from .forms import CategoryForm, FridgeForm, ComentarioForm, IngredienteForm, ReceitaForm, LoginForm, ShoplistForm,UserProfileForm
 
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
@@ -29,6 +29,10 @@ from django.http import JsonResponse
 from app import models
 from django.contrib import messages
 from datetime import date
+
+
+from django.contrib.auth.decorators import login_required
+from .forms import UserProfileForm
 
 # Create your views here.
 
@@ -437,3 +441,27 @@ def signout(request):
     #messages.success(request, "Logged Out Successfully!!")
     return redirect('index')
 
+
+@login_required
+def user_settings(request):
+    user = request.user
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=user)
+
+        if form.is_valid():
+            
+            old_password = form.cleaned_data.get('password')
+            if old_password and not user.check_password(old_password):
+                messages.error(request, 'Old password is incorrect.')
+            else:
+                form.save()
+                messages.success(request, 'Profile updated successfully.')
+                return redirect('user_settings')
+        else:
+            messages.error(request, 'Error updating profile. Please correct the errors.')
+
+    else:
+        form = UserProfileForm(instance=user)
+
+    return render(request, 'settings.html', {'form': form})

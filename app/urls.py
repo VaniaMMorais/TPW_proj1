@@ -42,6 +42,8 @@ urlpatterns = [
     path('add_to_favorites/<int:pk>/', views.add_to_favorites, name='add_to_favorites'),
     path('remove_from_favorites/<int:pk>/', views.remove_from_favorites, name='remove_from_favorites'),
 
+    path('settings/', views.user_settings, name='user_settings'),
+
 ]
 
 if settings.DEBUG:
